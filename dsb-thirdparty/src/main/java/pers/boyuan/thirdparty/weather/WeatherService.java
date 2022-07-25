@@ -15,6 +15,9 @@ public interface WeatherService {
 
     /**
      * 获取指定城市天气
+     *
+     * @param cityName 城市名称
+     * @return 查询结果（压缩状态）
      */
     @GetMapping(value = "/weather_mini")
     String getCityWeather(@RequestParam("city") String cityName);
