@@ -15,6 +15,7 @@ public enum ResponseEnum {
      * 0 -> 操作成功
      */
     SUCCESS("0", "操作成功"),
+
     /**
      * 1 -> 操作失败, 请稍后重试
      */
