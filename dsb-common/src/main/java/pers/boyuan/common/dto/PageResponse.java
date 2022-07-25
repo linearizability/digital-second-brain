@@ -77,7 +77,7 @@ public class PageResponse<T> extends Response {
         return pageResponse;
     }
 
-    public static PageResponse error(Integer errorCode, String errorMessage) {
+    public static PageResponse error(String errorCode, String errorMessage) {
         PageResponse pageResponse = new PageResponse();
         pageResponse.setSuccess(Boolean.FALSE);
         pageResponse.setCode(errorCode);

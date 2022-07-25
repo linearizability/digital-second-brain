@@ -15,7 +15,7 @@ public class Response<T> {
     /**
      * 响应code
      */
-    private Integer code;
+    private String code;
 
     /**
      * 响应信息
@@ -35,11 +35,11 @@ public class Response<T> {
         this.isSuccess = success;
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -62,11 +62,11 @@ public class Response<T> {
     public Response() {
     }
 
-    public Response(Boolean isSuccess, Integer code, String msg) {
+    public Response(Boolean isSuccess, String code, String msg) {
         this(isSuccess, code, msg, null);
     }
 
-    public Response(Boolean isSuccess, Integer code, String msg, T data) {
+    public Response(Boolean isSuccess, String code, String msg, T data) {
         this.code = code;
         this.data = data;
         this.message = msg;
@@ -93,7 +93,7 @@ public class Response<T> {
         return new Response(Boolean.FALSE, responseEnum.getCode(), responseEnum.getMessage());
     }
 
-    public static Response error(Integer code, String msg) {
+    public static Response error(String code, String msg) {
         return new Response(Boolean.FALSE, code, msg);
     }
 

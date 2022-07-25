@@ -10,7 +10,7 @@ import pers.boyuan.common.constants.ResponseEnum;
  */
 public class CustomException extends RuntimeException {
 
-    private Integer code;
+    private String code;
 
     private String message;
 
@@ -21,13 +21,13 @@ public class CustomException extends RuntimeException {
         this.message = responseEnum.getMessage();
     }
 
-    public CustomException(Integer code, String message) {
+    public CustomException(String code, String message) {
         super(message);
         this.code = code;
         this.message = message;
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 

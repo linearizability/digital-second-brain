@@ -24,11 +24,10 @@ import java.util.List;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
     @ExceptionHandler(value = Exception.class)
     public Response handle(Exception e) {
         if (e instanceof HttpRequestMethodNotSupportedException) {
-            return Response.error(9999, e.getMessage());
+            return Response.error("9999", e.getMessage());
         }
         log.error("系统错误：", e);
         return Response.error(ResponseEnum.EXCEPTION);
