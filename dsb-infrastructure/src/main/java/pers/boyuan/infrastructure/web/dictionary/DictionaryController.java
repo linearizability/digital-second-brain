@@ -12,7 +12,7 @@ import pers.boyuan.api.out.dictionary.QueryDictionaryVO;
 import pers.boyuan.application.dictionary.DictionaryAppService;
 import pers.boyuan.common.constants.ResponseEnum;
 import pers.boyuan.common.dto.Response;
-import pers.boyuan.common.sheme.ValidationList;
+import pers.boyuan.common.scheme.ValidationList;
 
 import javax.validation.Valid;
 import java.util.List;

@@ -1,4 +1,4 @@
-package pers.boyuan.common.sheme;
+package pers.boyuan.common.scheme;
 
 import javax.validation.Valid;
 import java.util.*;
