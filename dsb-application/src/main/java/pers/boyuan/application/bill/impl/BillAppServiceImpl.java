@@ -7,6 +7,7 @@ import lombok.var;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import pers.boyuan.api.in.bill.CreateBillAO;
 import pers.boyuan.api.in.bill.ExportBillAO;
 import pers.boyuan.api.in.bill.QueryBillPageAO;
@@ -104,6 +105,17 @@ public class BillAppServiceImpl implements BillAppService {
     public void exportExcel(ExportBillAO ao, HttpServletResponse response) {
         var model = BillDomainConverter.INSTANCE.exportToModel(ao);
         billDomainService.exportExcel(model, response);
+    }
+
+    /**
+     * 导入账单excel
+     *
+     * @param excelFile 导入excel文件
+     * @return 导入成功行数
+     */
+    @Override
+    public Integer importExcel(MultipartFile excelFile) {
+        return billDomainService.importExcel(excelFile);
     }
 
 }

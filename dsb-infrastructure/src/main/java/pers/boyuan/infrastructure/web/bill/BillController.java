@@ -1,11 +1,11 @@
 package pers.boyuan.infrastructure.web.bill;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pers.boyuan.api.in.bill.CreateBillAO;
 import pers.boyuan.api.in.bill.ExportBillAO;
 import pers.boyuan.api.in.bill.QueryBillPageAO;
@@ -66,6 +66,13 @@ public class BillController {
     @ApiOperation("根据指定条件导出账单表数据为excel")
     public void exportExcel(ExportBillAO ao, HttpServletResponse response) {
         billAppService.exportExcel(ao, response);
+    }
+
+    @PostMapping("/importExcel")
+    @ApiOperation("导入账单数据")
+    public Response<Integer> importExcel(@RequestParam("excelFile") MultipartFile excelFile) {
+        Integer saveRow = billAppService.importExcel(excelFile);
+        return Response.success(saveRow);
     }
 
 }

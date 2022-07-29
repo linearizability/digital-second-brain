@@ -1,6 +1,7 @@
 package pers.boyuan.application.bill;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.springframework.web.multipart.MultipartFile;
 import pers.boyuan.api.in.bill.CreateBillAO;
 import pers.boyuan.api.in.bill.ExportBillAO;
 import pers.boyuan.api.in.bill.QueryBillPageAO;
@@ -57,5 +58,13 @@ public interface BillAppService {
      * @param response 响应头，导出数据写入
      */
     void exportExcel(ExportBillAO ao, HttpServletResponse response);
+
+    /**
+     * 导入账单excel
+     *
+     * @param excelFile 导入excel文件
+     * @return 导入成功行数
+     */
+    Integer importExcel(MultipartFile excelFile);
 
 }

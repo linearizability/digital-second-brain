@@ -1,6 +1,7 @@
 package pers.boyuan.domain.bill.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.springframework.web.multipart.MultipartFile;
 import pers.boyuan.domain.bill.model.BillModel;
 
 import javax.servlet.http.HttpServletResponse;
@@ -53,5 +54,13 @@ public interface BillDomainService {
      * @param response 响应头，导出数据写入
      */
     void exportExcel(BillModel model, HttpServletResponse response);
+
+    /**
+     * 导入账单excel
+     *
+     * @param excelFile 导入excel文件
+     * @return 导入成功行数
+     */
+    Integer importExcel(MultipartFile excelFile);
 
 }
