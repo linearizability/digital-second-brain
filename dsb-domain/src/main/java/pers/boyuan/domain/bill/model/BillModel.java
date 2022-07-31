@@ -1,5 +1,6 @@
 package pers.boyuan.domain.bill.model;
 
+import lombok.var;
 import pers.boyuan.common.constants.DictionaryTypeConstant;
 import pers.boyuan.common.enums.BaseEnum;
 import pers.boyuan.common.util.CreateBeanUtil;
@@ -36,9 +37,9 @@ public class BillModel {
     private String typeName;
 
     /**
-     * 账单分类id, 关联data_dictionary表
+     * 账单分类code, 详见字典表bill_category类型
      */
-    private Integer categoryId;
+    private String categoryCode;
 
     /**
      * 账单分类名称
@@ -108,16 +109,8 @@ public class BillModel {
     public BillModel() {
     }
 
-    public DictionaryDomainService getDictionaryDomainService() {
-        return dictionaryDomainService;
-    }
-
-    public void setDictionaryDomainService(DictionaryDomainService dictionaryDomainService) {
-        this.dictionaryDomainService = CreateBeanUtil.getBean(DictionaryDomainService.class);
-    }
-
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {
@@ -125,7 +118,7 @@ public class BillModel {
     }
 
     public Integer getType() {
-        return type;
+        return this.type;
     }
 
     public void setType(Integer type) {
@@ -136,44 +129,52 @@ public class BillModel {
         if (Objects.nonNull(this.type) && Objects.isNull(this.typeName)) {
             return BaseEnum.findByValue(BillEnum.BillTypeEnum.class, this.type).get().getText();
         }
+
         return this.typeName;
     }
 
     public void setTypeName(String typeName) {
-        typeName = null;
-        if (Objects.nonNull(this.type)) {
-            typeName = BaseEnum.findByValue(BillEnum.BillTypeEnum.class, this.type).get().getText();
-        }
         this.typeName = typeName;
+
+        if (Objects.nonNull(this.type)) {
+            this.typeName = BaseEnum.findByValue(BillEnum.BillTypeEnum.class, this.type).get().getText();
+        }
     }
 
-    public Integer getCategoryId() {
-        return categoryId;
+    public String getCategoryCode() {
+        return this.categoryCode;
     }
 
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryCode(String categoryCode) {
+        this.categoryCode = categoryCode;
     }
 
     public String getCategory() {
-        if (Objects.nonNull(this.categoryId) && Objects.isNull(this.category)) {
-            return dictionaryDomainService
-                    .queryNameByTypeAndCode(DictionaryTypeConstant.BILL_CATEGORY, String.valueOf(this.categoryId));
+        if (Objects.nonNull(this.categoryCode) && Objects.isNull(this.category)) {
+            var queryResult = dictionaryDomainService
+                    .queryByTypeAndCode(DictionaryTypeConstant.BILL_CATEGORY, this.categoryCode);
+
+            if (Objects.nonNull(queryResult)) {
+                return queryResult.getName();
+            }
         }
+
         return this.category;
     }
 
     public void setCategory(String category) {
-        category = null;
-        if (Objects.nonNull(this.categoryId)) {
-            category = dictionaryDomainService
-                    .queryNameByTypeAndCode(DictionaryTypeConstant.BILL_CATEGORY, String.valueOf(this.categoryId));
-        }
         this.category = category;
+
+        var queryResult = dictionaryDomainService
+                .queryByTypeAndCode(DictionaryTypeConstant.BILL_CATEGORY, this.categoryCode);
+
+        if (Objects.nonNull(queryResult)) {
+            this.category = queryResult.getName();
+        }
     }
 
     public String getContent() {
-        return content;
+        return this.content;
     }
 
     public void setContent(String content) {
@@ -181,7 +182,7 @@ public class BillModel {
     }
 
     public String getRemark() {
-        return remark;
+        return this.remark;
     }
 
     public void setRemark(String remark) {
@@ -189,7 +190,7 @@ public class BillModel {
     }
 
     public BigDecimal getAmount() {
-        return amount;
+        return this.amount;
     }
 
     public void setAmount(BigDecimal amount) {
@@ -197,7 +198,7 @@ public class BillModel {
     }
 
     public Integer getYear() {
-        return year;
+        return this.year;
     }
 
     public void setYear(Integer year) {
@@ -208,7 +209,7 @@ public class BillModel {
     }
 
     public Integer getMonth() {
-        return month;
+        return this.month;
     }
 
     public void setMonth(Integer month) {
@@ -219,7 +220,7 @@ public class BillModel {
     }
 
     public Integer getDay() {
-        return day;
+        return this.day;
     }
 
     public void setDay(Integer day) {
@@ -230,7 +231,7 @@ public class BillModel {
     }
 
     public Integer getWeek() {
-        return week;
+        return this.week;
     }
 
     public void setWeek(Integer week) {
@@ -241,7 +242,7 @@ public class BillModel {
     }
 
     public LocalDateTime getPaymentTime() {
-        return paymentTime;
+        return this.paymentTime;
     }
 
     public void setPaymentTime(LocalDateTime paymentTime) {
@@ -253,7 +254,7 @@ public class BillModel {
     }
 
     public String getBeginPaymentTime() {
-        return beginPaymentTime;
+        return this.beginPaymentTime;
     }
 
     public void setBeginPaymentTime(String beginPaymentTime) {
@@ -261,7 +262,7 @@ public class BillModel {
     }
 
     public String getEndPaymentTime() {
-        return endPaymentTime;
+        return this.endPaymentTime;
     }
 
     public void setEndPaymentTime(String endPaymentTime) {
@@ -269,7 +270,7 @@ public class BillModel {
     }
 
     public Integer getPageIndex() {
-        return pageIndex;
+        return this.pageIndex;
     }
 
     public void setPageIndex(Integer pageIndex) {
@@ -277,10 +278,11 @@ public class BillModel {
     }
 
     public Integer getPageSize() {
-        return pageSize;
+        return this.pageSize;
     }
 
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
     }
+
 }

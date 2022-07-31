@@ -42,9 +42,9 @@ public class BillExportExcelBO {
     private String remark;
 
     /**
-     * 账单金额: 单位(元)
+     * 账单金额(元)
      */
-    @ExcelProperty("账单金额: 单位(元)")
+    @ExcelProperty("账单金额(元)")
     private BigDecimal amount;
 
     /**

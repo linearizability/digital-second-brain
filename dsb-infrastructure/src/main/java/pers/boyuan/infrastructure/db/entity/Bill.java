@@ -35,9 +35,9 @@ public class Bill implements Serializable {
     private Integer type;
 
     /**
-     * 账单分类id，关联data_dictionary表
+     * 账单分类code, 详见字典表bill_category类型
      */
-    private Integer categoryId;
+    private String categoryCode;
 
     /**
      * 账单内容
@@ -50,7 +50,7 @@ public class Bill implements Serializable {
     private String remark;
 
     /**
-     * 账单金额：单位(元)
+     * 账单金额(元)
      */
     private BigDecimal amount;
 

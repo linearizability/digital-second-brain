@@ -32,10 +32,10 @@ public class QueryBillPageAO extends AbstractPageQuery {
     private Integer type;
 
     /**
-     * 账单分类id, 关联data_dictionary表id
+     * 账单分类code, 详见字典表bill_category类型
      */
-    @ApiModelProperty("账单分类id, 关联data_dictionary表id")
-    private Integer categoryId;
+    @ApiModelProperty("账单分类code, 详见字典表bill_category类型")
+    private String categoryCode;
 
     /**
      * 账单内容

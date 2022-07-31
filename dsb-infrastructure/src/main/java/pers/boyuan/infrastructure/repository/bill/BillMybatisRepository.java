@@ -129,7 +129,7 @@ public class BillMybatisRepository implements BillRepository {
         var queryWrapper = Wrappers.<Bill>lambdaQuery()
                 .eq(Objects.nonNull(bill.getId()), Bill::getId, bill.getId())
                 .eq(Objects.nonNull(bill.getType()), Bill::getType, bill.getType())
-                .eq(Objects.nonNull(bill.getCategoryId()), Bill::getCategoryId, bill.getCategoryId())
+                .eq(Objects.nonNull(bill.getCategoryCode()), Bill::getCategoryCode, bill.getCategoryCode())
                 .like(StringUtils.isNotBlank(bill.getContent()), Bill::getContent, bill.getContent())
                 .like(StringUtils.isNotBlank(bill.getRemark()), Bill::getRemark, bill.getRemark())
                 .eq(Objects.nonNull(bill.getAmount()), Bill::getAmount, bill.getAmount())

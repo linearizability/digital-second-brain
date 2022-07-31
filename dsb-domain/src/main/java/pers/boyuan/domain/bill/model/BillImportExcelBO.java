@@ -24,10 +24,10 @@ public class BillImportExcelBO {
     private Integer type;
 
     /**
-     * 账单分类id, 关联data_dictionary表
+     * 账单分类code, 详见字典表bill_category类型
      */
     @ExcelProperty("账单分类")
-    private Integer categoryId;
+    private String categoryCode;
 
     /**
      * 账单内容

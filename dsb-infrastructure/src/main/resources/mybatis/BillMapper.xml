@@ -6,7 +6,7 @@
     <resultMap id="BaseResultMap" type="pers.boyuan.infrastructure.db.entity.Bill">
         <id column="id" property="id" />
         <result column="type" property="type" />
-        <result column="category_id" property="categoryId" />
+        <result column="category_code" property="categoryCode" />
         <result column="content" property="content" />
         <result column="remark" property="remark" />
         <result column="amount" property="amount" />
