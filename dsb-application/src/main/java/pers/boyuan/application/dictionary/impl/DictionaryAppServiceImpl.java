@@ -39,7 +39,6 @@ public class DictionaryAppServiceImpl implements DictionaryAppService {
      * @return 是否创建成功
      */
     @Override
-    @CacheEvict(cacheNames = "dsb:cache:dictionary", allEntries = true)
     public Boolean create(List<CreateDictionaryAO> aoList) {
         if (CollectionUtil.isEmpty(aoList)) {
             return Boolean.FALSE;
@@ -57,7 +56,6 @@ public class DictionaryAppServiceImpl implements DictionaryAppService {
      * @return 是否创建成功
      */
     @Override
-    @CacheEvict(cacheNames = "dsb:cache:dictionary", allEntries = true)
     public Boolean delete(DeleteDictionaryAO ao) {
         var model = DictionaryDomainConverter.INSTANCE.deleteDictionaryToModel(ao);
 
@@ -71,7 +69,6 @@ public class DictionaryAppServiceImpl implements DictionaryAppService {
      * @return 是否创建成功
      */
     @Override
-    @CacheEvict(cacheNames = "dsb:cache:dictionary", allEntries = true)
     public Boolean update(UpdateDictionaryAO ao) {
         var model = DictionaryDomainConverter.INSTANCE.updateDictionaryToModel(ao);
 
@@ -85,7 +82,6 @@ public class DictionaryAppServiceImpl implements DictionaryAppService {
      * @return 应用层转换后数据
      */
     @Override
-    @Cacheable(cacheNames = "dsb:cache:dictionary")
     public Map<String, List<QueryDictionaryVO>> query(QueryDictionaryAO ao) {
         var param = DictionaryDomainConverter.INSTANCE.queryDictionaryToModel(ao);
         var queryResult = dictionaryDomainService.query(param);

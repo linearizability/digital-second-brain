@@ -2,6 +2,8 @@ package pers.boyuan.domain.dictionary.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 字典表领域层模型
  *
@@ -9,7 +11,7 @@ import lombok.Data;
  * @date 2022-06-11
  */
 @Data
-public class DictionaryModel {
+public class DictionaryModel implements Serializable {
     /**
      * 主键id
      */

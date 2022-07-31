@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.var;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import pers.boyuan.domain.dictionary.model.DictionaryModel;
 import pers.boyuan.domain.dictionary.repository.DictionaryRepository;
@@ -40,6 +42,7 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
      * @return 是否创建成功
      */
     @Override
+    @CacheEvict(cacheNames = "dsb:cache:dictionary", allEntries = true)
     public Boolean create(List<DictionaryModel> modelList) {
         var saveList = DictionaryEntityConverter.INSTANCE.modelToEntityList(modelList);
 
@@ -53,6 +56,7 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
      * @return 是否删除成功
      */
     @Override
+    @CacheEvict(cacheNames = "dsb:cache:dictionary", allEntries = true)
     public Boolean delete(DictionaryModel param) {
         var queryWrapper = getQueryDictionaryWrapper(param);
 
@@ -66,6 +70,7 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
      * @return 是否创建成功
      */
     @Override
+    @CacheEvict(cacheNames = "dsb:cache:dictionary", allEntries = true)
     public Boolean update(DictionaryModel model) {
         var param = DictionaryEntityConverter.INSTANCE.modelToEntity(model);
 
@@ -86,6 +91,7 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
      * @return 数据库查询结果模型
      */
     @Override
+    @Cacheable(cacheNames = "dsb:cache:dictionary")
     public List<DictionaryModel> query(DictionaryModel model) {
         var queryWrapper = getQueryDictionaryWrapper(model);
 
