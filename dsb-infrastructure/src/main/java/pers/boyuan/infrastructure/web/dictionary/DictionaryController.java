@@ -4,9 +4,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import pers.boyuan.api.in.dictionary.CreateDictionaryAO;
 import pers.boyuan.api.in.dictionary.DeleteDictionaryAO;
+import pers.boyuan.api.in.dictionary.QueryDictionaryAO;
 import pers.boyuan.api.in.dictionary.UpdateDictionaryAO;
 import pers.boyuan.api.out.dictionary.QueryDictionaryVO;
 import pers.boyuan.application.dictionary.DictionaryAppService;
@@ -53,10 +57,10 @@ public class DictionaryController {
         return updateFlag ? Response.success() : Response.error(ResponseEnum.FAIL);
     }
 
-    @GetMapping("/query")
+    @PostMapping("/query")
     @ApiOperation("根据type查询字典数据，无参拉取全量")
-    public Response<Map<String, List<QueryDictionaryVO>>> query(@RequestParam(name = "typeList", required = false) List<String> typeList) {
-        var result = dictionaryAppService.query(typeList);
+    public Response<Map<String, List<QueryDictionaryVO>>> query(@RequestBody QueryDictionaryAO ao) {
+        var result = dictionaryAppService.query(ao);
         return Response.success(result);
     }
 

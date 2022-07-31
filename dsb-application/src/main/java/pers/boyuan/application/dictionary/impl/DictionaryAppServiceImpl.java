@@ -8,11 +8,11 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import pers.boyuan.api.in.dictionary.CreateDictionaryAO;
 import pers.boyuan.api.in.dictionary.DeleteDictionaryAO;
+import pers.boyuan.api.in.dictionary.QueryDictionaryAO;
 import pers.boyuan.api.in.dictionary.UpdateDictionaryAO;
 import pers.boyuan.api.out.dictionary.QueryDictionaryVO;
 import pers.boyuan.application.dictionary.DictionaryAppService;
 import pers.boyuan.application.dictionary.converter.DictionaryDomainConverter;
-import pers.boyuan.domain.dictionary.model.DictionaryModel;
 import pers.boyuan.domain.dictionary.service.DictionaryDomainService;
 
 import java.util.Collections;
@@ -45,7 +45,7 @@ public class DictionaryAppServiceImpl implements DictionaryAppService {
             return Boolean.FALSE;
         }
 
-        List<DictionaryModel> modelList = DictionaryDomainConverter.INSTANCE.createDictionaryToModelList(aoList);
+        var modelList = DictionaryDomainConverter.INSTANCE.createDictionaryToModelList(aoList);
 
         return dictionaryDomainService.create(modelList);
     }
@@ -59,7 +59,7 @@ public class DictionaryAppServiceImpl implements DictionaryAppService {
     @Override
     @CacheEvict(cacheNames = "dsb:cache:dictionary", allEntries = true)
     public Boolean delete(DeleteDictionaryAO ao) {
-        DictionaryModel model = DictionaryDomainConverter.INSTANCE.deleteDictionaryToModel(ao);
+        var model = DictionaryDomainConverter.INSTANCE.deleteDictionaryToModel(ao);
 
         return dictionaryDomainService.delete(model);
     }
@@ -73,21 +73,22 @@ public class DictionaryAppServiceImpl implements DictionaryAppService {
     @Override
     @CacheEvict(cacheNames = "dsb:cache:dictionary", allEntries = true)
     public Boolean update(UpdateDictionaryAO ao) {
-        DictionaryModel model = DictionaryDomainConverter.INSTANCE.updateDictionaryToModel(ao);
+        var model = DictionaryDomainConverter.INSTANCE.updateDictionaryToModel(ao);
 
         return dictionaryDomainService.update(model);
     }
 
     /**
-     * 查询字典
+     * 查询字典表数据
      *
-     * @param typeList 根据type列表查询对应数据，为空拉取全量
+     * @param ao 查询字典参数
      * @return 应用层转换后数据
      */
     @Override
     @Cacheable(cacheNames = "dsb:cache:dictionary")
-    public Map<String, List<QueryDictionaryVO>> query(List<String> typeList) {
-        var queryResult = dictionaryDomainService.query(typeList);
+    public Map<String, List<QueryDictionaryVO>> query(QueryDictionaryAO ao) {
+        var param = DictionaryDomainConverter.INSTANCE.queryDictionaryToModel(ao);
+        var queryResult = dictionaryDomainService.query(param);
 
         if (CollectionUtil.isEmpty(queryResult)) {
             return Collections.emptyMap();

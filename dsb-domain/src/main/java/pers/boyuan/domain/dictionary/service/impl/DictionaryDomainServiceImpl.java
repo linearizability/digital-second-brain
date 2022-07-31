@@ -13,6 +13,7 @@ import pers.boyuan.domain.dictionary.service.DictionaryDomainService;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -81,14 +82,14 @@ public class DictionaryDomainServiceImpl implements DictionaryDomainService {
     }
 
     /**
-     * 根据type查询字典数据
+     * 根据参数查询字典数据
      *
-     * @param typeList 根据type列表查询对应数据，为空拉取全量
+     * @param model 字典表查询参数
      * @return 领域层处理后数据
      */
     @Override
-    public Map<String, List<DictionaryModel>> query(List<String> typeList) {
-        var queryResult = dictionaryRepository.query(typeList);
+    public Map<String, List<DictionaryModel>> query(DictionaryModel model) {
+        var queryResult = dictionaryRepository.query(model);
 
         if (CollectionUtil.isEmpty(queryResult)) {
             return Collections.emptyMap();
@@ -101,15 +102,21 @@ public class DictionaryDomainServiceImpl implements DictionaryDomainService {
     }
 
     /**
-     * 根据type和code查询字典name
+     * 根据type和code查询字典数据
      *
-     * @param type 字典表type
-     * @param code 字典表code
-     * @return 字典表name
+     * @param type 字典表类型
+     * @param code 字典表编码
+     * @return 字典表数据模型
      */
     @Override
-    public String queryNameByTypeAndCode(String type, String code) {
-        return dictionaryRepository.queryNameByTypeAndCode(type, code);
+    public DictionaryModel queryByTypeAndCode(String type, String code) {
+        var queryResult = dictionaryRepository.queryByTypeAndCode(type, code);
+
+        if (Objects.nonNull(queryResult)) {
+            return queryResult;
+        }
+
+        return null;
     }
 
 }

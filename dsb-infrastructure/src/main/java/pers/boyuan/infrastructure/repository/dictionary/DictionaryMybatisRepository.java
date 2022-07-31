@@ -1,6 +1,7 @@
 package pers.boyuan.infrastructure.repository.dictionary;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.var;
 import org.apache.commons.lang3.StringUtils;
@@ -48,21 +49,12 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
     /**
      * 根据参数删除字典
      *
-     * @param model 删除条件参数
+     * @param param 删除条件参数
      * @return 是否删除成功
      */
     @Override
-    public Boolean delete(DictionaryModel model) {
-        var param = DictionaryEntityConverter.INSTANCE.modelToEntity(model);
-
-        var queryWrapper = Wrappers.<Dictionary>lambdaQuery()
-                .eq(Objects.nonNull(param.getId()), Dictionary::getId, param.getId())
-                .or()
-                .eq(StringUtils.isNotBlank(param.getType()), Dictionary::getType, param.getType())
-                .or()
-                .eq(StringUtils.isNotBlank(param.getCode()), Dictionary::getCode, param.getCode())
-                .or()
-                .eq(StringUtils.isNotBlank(param.getName()), Dictionary::getName, param.getName());
+    public Boolean delete(DictionaryModel param) {
+        var queryWrapper = getQueryDictionaryWrapper(param);
 
         return dictionaryService.remove(queryWrapper);
     }
@@ -90,13 +82,12 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
     /**
      * 根据type查询字典数据
      *
-     * @param typeList 根据type列表查询对应数据，为空拉取全量
+     * @param model
      * @return 数据库查询结果模型
      */
     @Override
-    public List<DictionaryModel> query(List<String> typeList) {
-        var queryWrapper = Wrappers.<Dictionary>lambdaQuery()
-                .in(CollectionUtil.isNotEmpty(typeList), Dictionary::getType, typeList);
+    public List<DictionaryModel> query(DictionaryModel model) {
+        var queryWrapper = getQueryDictionaryWrapper(model);
 
         var queryResult = dictionaryService.list(queryWrapper);
 
@@ -109,25 +100,39 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
     }
 
     /**
-     * 根据type和code查询字典name
+     * 根据type和code查询字典数据
      *
-     * @param type 字典表type
-     * @param code 字典表code
-     * @return 字典表name
+     * @param type 字典表类型
+     * @param code 字典表编码
+     * @return 字典表数据模型
      */
     @Override
-    public String queryNameByTypeAndCode(String type, String code) {
-        var queryWrapper = Wrappers.<Dictionary>lambdaQuery()
-                .eq(Dictionary::getType, type)
-                .eq(Dictionary::getCode, code);
+    public DictionaryModel queryByTypeAndCode(String type, String code) {
+        DictionaryModel param = new DictionaryModel();
+        param.setType(type);
+        param.setCode(code);
+
+        LambdaQueryWrapper<Dictionary> queryWrapper = getQueryDictionaryWrapper(param);
 
         var queryResult = dictionaryService.getOne(queryWrapper);
 
-        if (Objects.nonNull(queryResult)) {
-            return queryResult.getName();
-        }
+        return DictionaryEntityConverter.INSTANCE.entityToModel(queryResult);
+    }
 
-        return null;
+    /**
+     * 查询账单通用wrapper
+     *
+     * @param param 查询条件
+     * @return 生成wrapper
+     */
+    private LambdaQueryWrapper<Dictionary> getQueryDictionaryWrapper(DictionaryModel param) {
+        var queryWrapper = Wrappers.<Dictionary>lambdaQuery()
+                .eq(Objects.nonNull(param.getId()), Dictionary::getId, param.getId())
+                .eq(StringUtils.isNotBlank(param.getType()), Dictionary::getType, param.getType())
+                .eq(StringUtils.isNotBlank(param.getCode()), Dictionary::getCode, param.getCode())
+                .eq(StringUtils.isNotBlank(param.getName()), Dictionary::getName, param.getName());
+
+        return queryWrapper;
     }
 
 }

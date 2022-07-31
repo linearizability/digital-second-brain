@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import pers.boyuan.api.in.dictionary.CreateDictionaryAO;
 import pers.boyuan.api.in.dictionary.DeleteDictionaryAO;
+import pers.boyuan.api.in.dictionary.QueryDictionaryAO;
 import pers.boyuan.api.in.dictionary.UpdateDictionaryAO;
 import pers.boyuan.application.dictionary.DictionaryAppService;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -50,7 +50,10 @@ public class DictionaryTests {
     @Test
     @Order(2)
     void updateTest() {
-        var testEntity = dictionaryAppService.query(Arrays.asList("test"));
+        var param = new QueryDictionaryAO();
+        param.setType("test");
+
+        var testEntity = dictionaryAppService.query(param);
 
         var ao = new UpdateDictionaryAO();
         ao.setName("updateTest");
@@ -63,9 +66,7 @@ public class DictionaryTests {
 
     @Test
     void queryAllTest() {
-        var ao = new ArrayList<String>();
-
-        var allEntity = dictionaryAppService.query(ao);
+        var allEntity = dictionaryAppService.query(null);
 
         allEntity.keySet().forEach(
                 key -> allEntity.get(key).forEach(System.out::println)
@@ -74,9 +75,10 @@ public class DictionaryTests {
 
     @Test
     void queryPartTest() {
-        var ao = Arrays.asList("test");
+        var param = new QueryDictionaryAO();
+        param.setType("test");
 
-        var partEntity = dictionaryAppService.query(ao);
+        var partEntity = dictionaryAppService.query(param);
 
         partEntity.keySet().forEach(
                 key -> partEntity.get(key).forEach(System.out::println)
