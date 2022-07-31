@@ -133,11 +133,11 @@ public class BillMybatisRepository implements BillRepository {
                 .like(StringUtils.isNotBlank(bill.getContent()), Bill::getContent, bill.getContent())
                 .like(StringUtils.isNotBlank(bill.getRemark()), Bill::getRemark, bill.getRemark())
                 .eq(Objects.nonNull(bill.getAmount()), Bill::getAmount, bill.getAmount())
-                .between(StringUtils.isNotBlank(model.getBeginPaymentTime())
+                .between(
+                        StringUtils.isNotBlank(model.getBeginPaymentTime())
                                 && StringUtils.isNotBlank(model.getEndPaymentTime()),
                         Bill::getPaymentTime,
-                        model.getBeginPaymentTime(),
-                        model.getEndPaymentTime());
+                        model.getBeginPaymentTime(), model.getEndPaymentTime());
 
         return queryWrapper;
     }

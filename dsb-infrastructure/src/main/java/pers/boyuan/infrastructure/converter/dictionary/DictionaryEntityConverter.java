@@ -8,6 +8,8 @@ import pers.boyuan.infrastructure.db.entity.Dictionary;
 import java.util.List;
 
 /**
+ * Dictionary实体类与Dictionary模型 转换类
+ *
  * @author ZhangBoyuan
  * @date 2022-06-11
  */

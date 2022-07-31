@@ -147,5 +147,5 @@ public class DbGenerator {
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
     }
-}
 
+}

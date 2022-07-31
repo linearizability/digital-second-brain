@@ -40,29 +40,29 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
      */
     @Override
     public Boolean create(List<DictionaryModel> modelList) {
-        var dataDictionaryList = DictionaryEntityConverter.INSTANCE.modelToEntityList(modelList);
+        var saveList = DictionaryEntityConverter.INSTANCE.modelToEntityList(modelList);
 
-        return dictionaryService.saveBatch(dataDictionaryList);
+        return dictionaryService.saveBatch(saveList);
     }
 
     /**
      * 根据参数删除字典
      *
-     * @param model 删除参数
+     * @param model 删除条件参数
      * @return 是否删除成功
      */
     @Override
     public Boolean delete(DictionaryModel model) {
-        var entity = DictionaryEntityConverter.INSTANCE.modelToEntity(model);
+        var param = DictionaryEntityConverter.INSTANCE.modelToEntity(model);
 
         var queryWrapper = Wrappers.<Dictionary>lambdaQuery()
-                .eq(Objects.nonNull(entity.getId()), Dictionary::getId, entity.getId())
+                .eq(Objects.nonNull(param.getId()), Dictionary::getId, param.getId())
                 .or()
-                .eq(StringUtils.isNotBlank(entity.getType()), Dictionary::getType, entity.getType())
+                .eq(StringUtils.isNotBlank(param.getType()), Dictionary::getType, param.getType())
                 .or()
-                .eq(StringUtils.isNotBlank(entity.getCode()), Dictionary::getCode, entity.getCode())
+                .eq(StringUtils.isNotBlank(param.getCode()), Dictionary::getCode, param.getCode())
                 .or()
-                .eq(StringUtils.isNotBlank(entity.getName()), Dictionary::getName, entity.getName());
+                .eq(StringUtils.isNotBlank(param.getName()), Dictionary::getName, param.getName());
 
         return dictionaryService.remove(queryWrapper);
     }
@@ -75,14 +75,14 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
      */
     @Override
     public Boolean update(DictionaryModel model) {
-        var entity = DictionaryEntityConverter.INSTANCE.modelToEntity(model);
+        var param = DictionaryEntityConverter.INSTANCE.modelToEntity(model);
 
         var updateWrapper = Wrappers.<Dictionary>lambdaUpdate()
-                .set(StringUtils.isNotBlank(entity.getType()), Dictionary::getType, entity.getType())
-                .set(StringUtils.isNotBlank(entity.getName()), Dictionary::getName, entity.getName())
-                .set(StringUtils.isNotBlank(entity.getCode()), Dictionary::getCode, entity.getCode())
-                .set(StringUtils.isNotBlank(entity.getRemark()), Dictionary::getRemark, entity.getRemark())
-                .eq(Dictionary::getId, entity.getId());
+                .set(StringUtils.isNotBlank(param.getType()), Dictionary::getType, param.getType())
+                .set(StringUtils.isNotBlank(param.getName()), Dictionary::getName, param.getName())
+                .set(StringUtils.isNotBlank(param.getCode()), Dictionary::getCode, param.getCode())
+                .set(StringUtils.isNotBlank(param.getRemark()), Dictionary::getRemark, param.getRemark())
+                .eq(Dictionary::getId, param.getId());
 
         return dictionaryService.update(updateWrapper);
     }

@@ -37,12 +37,8 @@ public class Swagger2Config {
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("pers.boyuan.infrastructure.web"))
-//                        .or(RequestHandlerSelectors.basePackage("com.digital.cnzz.dop.http"))
-//                        .or(RequestHandlerSelectors.basePackage("com.digital.cnzz.core.controller")))
                 .paths(PathSelectors.any())
                 .build();
-//                .securitySchemes(securitySchemes())
-//                .securityContexts(securityContexts());
     }
 
     private ApiInfo apiInfo() {
@@ -62,4 +58,3 @@ public class Swagger2Config {
     }
 
 }
-

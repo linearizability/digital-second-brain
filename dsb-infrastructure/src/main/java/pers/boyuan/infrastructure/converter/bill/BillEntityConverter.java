@@ -8,6 +8,8 @@ import pers.boyuan.infrastructure.db.entity.Bill;
 import java.util.List;
 
 /**
+ * Bill实体类与Bill模型 转换类
+ *
  * @author ZhangBoyuan
  * @date 2022-06-11
  */

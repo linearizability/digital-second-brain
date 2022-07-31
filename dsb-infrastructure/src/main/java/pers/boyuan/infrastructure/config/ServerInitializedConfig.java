@@ -1,6 +1,5 @@
 package pers.boyuan.infrastructure.config;
 
-
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,17 +15,18 @@ import java.net.UnknownHostException;
  *
  * @author ZhangBoyuan
  * @date 2022-02-08
- **/
+ */
 @Data
 @Slf4j
 @Component
 public class ServerInitializedConfig implements ApplicationListener<WebServerInitializedEvent> {
 
-    private int serverPort;
     @Value("${server.servlet.context-path}")
     private String path;
 
-    public int getPort() {
+    private Integer serverPort;
+
+    public Integer getPort() {
         return this.serverPort;
     }
 

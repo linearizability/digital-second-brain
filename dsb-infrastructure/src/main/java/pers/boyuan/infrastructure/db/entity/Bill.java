@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * 消费账单表实体类
  *
  * @author ZhangBoyuan
- * @since 2022-06-22
+ * @date 2022-06-22
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -30,12 +30,12 @@ public class Bill implements Serializable {
     private Long id;
 
     /**
-     * 账单类型: 1 -> 收入, -1 -> 支出
+     * 账单类型：1 -> 收入, -1 -> 支出
      */
     private Integer type;
 
     /**
-     * 账单分类id, 关联data_dictionary表
+     * 账单分类id，关联data_dictionary表
      */
     private Integer categoryId;
 
@@ -50,27 +50,27 @@ public class Bill implements Serializable {
     private String remark;
 
     /**
-     * 账单金额: 单位(元)
+     * 账单金额：单位(元)
      */
     private BigDecimal amount;
 
     /**
-     * 账单所属年份yyyy
+     * 账单所属年份：yyyy
      */
     private Integer year;
 
     /**
-     * 账单所属月份: 1~12
+     * 账单所属月份：1~12
      */
     private Integer month;
 
     /**
-     * 账单所属日: 1~31
+     * 账单所属日：1~31
      */
     private Integer day;
 
     /**
-     * 账单所属星期: 1~7
+     * 账单所属星期：1~7
      */
     private Integer week;
 
@@ -88,6 +88,5 @@ public class Bill implements Serializable {
      * 更新时间
      */
     private LocalDateTime gmtUpdate;
-
 
 }

@@ -10,7 +10,7 @@ import pers.boyuan.infrastructure.db.service.IBillService;
  * 消费账单表 服务实现类
  *
  * @author ZhangBoyuan
- * @since 2022-06-22
+ * @date 2022-06-22
  */
 @Service
 public class BillServiceImpl extends ServiceImpl<BillMapper, Bill> implements IBillService {
