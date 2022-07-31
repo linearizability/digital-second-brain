@@ -8,7 +8,7 @@ import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import pers.boyuan.common.util.EasyExcelUtils;
+import pers.boyuan.common.util.EasyExcelUtil;
 import pers.boyuan.domain.bill.converter.BillModelConverter;
 import pers.boyuan.domain.bill.model.BillExportExcelBO;
 import pers.boyuan.domain.bill.model.BillImportExcelBO;
@@ -89,7 +89,7 @@ public class BillDomainServiceImpl implements BillDomainService {
 
         var exportList = BillModelConverter.INSTANCE.modelToExportExcelBOList(queryResult);
 
-        EasyExcelUtils.easyExcelWrite(response, BillExportExcelBO.class, "账单", "账单", exportList);
+        EasyExcelUtil.easyExcelWrite(response, BillExportExcelBO.class, "账单", "账单", exportList);
     }
 
     /**

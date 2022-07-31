@@ -17,7 +17,7 @@ import java.util.Map;
  * @date 2022-07-18
  */
 @Slf4j
-public class EasyExcelUtils {
+public class EasyExcelUtil {
     public static void easyExcelWrite(HttpServletResponse response, Class<?> tClass,
                                       String fileName, String sheetName,
                                       List<?> dataList) {
