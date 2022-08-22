@@ -3,8 +3,6 @@ package pers.boyuan.application.dictionary.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import pers.boyuan.api.in.dictionary.CreateDictionaryAO;
 import pers.boyuan.api.in.dictionary.DeleteDictionaryAO;

@@ -15,7 +15,6 @@ import pers.boyuan.api.in.bill.UpdateBillAO;
 import pers.boyuan.api.out.bill.QueryBillVO;
 import pers.boyuan.application.bill.BillAppService;
 import pers.boyuan.application.bill.converter.BillDomainConverter;
-import pers.boyuan.domain.bill.model.BillModel;
 import pers.boyuan.domain.bill.service.BillDomainService;
 
 import javax.servlet.http.HttpServletResponse;
