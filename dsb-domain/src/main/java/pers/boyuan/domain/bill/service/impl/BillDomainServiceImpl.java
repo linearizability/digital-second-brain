@@ -4,10 +4,13 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import pers.boyuan.common.constants.ResponseEnum;
+import pers.boyuan.common.exception.CustomException;
 import pers.boyuan.common.util.EasyExcelUtil;
 import pers.boyuan.domain.bill.converter.BillModelConverter;
 import pers.boyuan.domain.bill.model.BillExportExcelBO;
@@ -27,6 +30,7 @@ import java.util.List;
  * @author ZhangBoyuan
  * @date 2022-06-22
  */
+@Slf4j
 @Service
 public class BillDomainServiceImpl implements BillDomainService {
 
@@ -114,7 +118,8 @@ public class BillDomainServiceImpl implements BillDomainService {
                 billRepository.create(saveList);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            log.error("导入文件异常，{}", e);
+            throw new CustomException(ResponseEnum.FAIL);
         }
 
         return saveRow;
