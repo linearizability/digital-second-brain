@@ -13,7 +13,6 @@ import pers.boyuan.domain.dictionary.service.DictionaryDomainService;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -82,6 +81,16 @@ public class DictionaryDomainServiceImpl implements DictionaryDomainService {
     }
 
     /**
+     * 获取字典表所有数据
+     *
+     * @return 字典表所有数据
+     */
+    @Override
+    public List<DictionaryModel> getAll() {
+        return dictionaryRepository.getAll();
+    }
+
+    /**
      * 根据参数查询字典数据
      *
      * @param model 字典表查询参数
@@ -99,24 +108,6 @@ public class DictionaryDomainServiceImpl implements DictionaryDomainService {
                 .collect(Collectors.groupingBy(DictionaryModel::getType));
 
         return result;
-    }
-
-    /**
-     * 根据type和code查询字典数据
-     *
-     * @param type 字典表类型
-     * @param code 字典表编码
-     * @return 字典表数据模型
-     */
-    @Override
-    public DictionaryModel queryByTypeAndCode(String type, String code) {
-        var queryResult = dictionaryRepository.queryByTypeAndCode(type, code);
-
-        if (Objects.nonNull(queryResult)) {
-            return queryResult;
-        }
-
-        return null;
     }
 
 }

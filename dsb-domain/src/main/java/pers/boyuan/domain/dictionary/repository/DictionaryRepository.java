@@ -37,7 +37,7 @@ public interface DictionaryRepository {
     Boolean update(DictionaryModel model);
 
     /**
-     * 根据type查询字典数据
+     * 根据参数查询字典数据
      *
      * @param model
      * @return 数据库查询结果模型
@@ -45,12 +45,10 @@ public interface DictionaryRepository {
     List<DictionaryModel> query(DictionaryModel model);
 
     /**
-     * 根据type和code查询字典数据
+     * 获取字典表所有数据
      *
-     * @param type 字典表类型
-     * @param code 字典表编码
-     * @return 字典表数据模型
+     * @return 字典表所有数据
      */
-    DictionaryModel queryByTypeAndCode(String type, String code);
+    List<DictionaryModel> getAll();
 
 }

@@ -38,20 +38,18 @@ public interface DictionaryDomainService {
     Boolean update(DictionaryModel model);
 
     /**
+     * 获取字典表所有数据
+     *
+     * @return 字典表所有数据
+     */
+    List<DictionaryModel> getAll();
+
+    /**
      * 根据参数查询字典数据
      *
      * @param model 字典表查询参数
      * @return 领域层处理后数据
      */
     Map<String, List<DictionaryModel>> query(DictionaryModel model);
-
-    /**
-     * 根据type和code查询字典数据
-     *
-     * @param type 字典表类型
-     * @param code 字典表编码
-     * @return 字典表数据模型
-     */
-    DictionaryModel queryByTypeAndCode(String type, String code);
 
 }

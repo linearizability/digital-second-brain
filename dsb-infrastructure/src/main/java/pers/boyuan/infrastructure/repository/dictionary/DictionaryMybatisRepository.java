@@ -28,7 +28,6 @@ import java.util.Objects;
  */
 @Component
 public class DictionaryMybatisRepository implements DictionaryRepository {
-
     @Autowired
     private IDictionaryService dictionaryService;
 
@@ -106,27 +105,17 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
     }
 
     /**
-     * 根据type和code查询字典数据
+     * 获取字典表所有数据
      *
-     * @param type 字典表类型
-     * @param code 字典表编码
-     * @return 字典表数据模型
+     * @return 字典表所有数据
      */
     @Override
-    public DictionaryModel queryByTypeAndCode(String type, String code) {
-        DictionaryModel param = new DictionaryModel();
-        param.setType(type);
-        param.setCode(code);
-
-        LambdaQueryWrapper<Dictionary> queryWrapper = getQueryDictionaryWrapper(param);
-
-        var queryResult = dictionaryService.getOne(queryWrapper);
-
-        return DictionaryEntityConverter.INSTANCE.entityToModel(queryResult);
+    public List<DictionaryModel> getAll() {
+        return DictionaryEntityConverter.INSTANCE.entityToModelList(dictionaryService.list());
     }
 
     /**
-     * 查询账单通用wrapper
+     * 查询字典通用wrapper
      *
      * @param param 查询条件
      * @return 生成wrapper
