@@ -5,7 +5,7 @@ import pers.boyuan.common.constants.DictionaryTypeConstant;
 import pers.boyuan.common.enums.BaseEnum;
 import pers.boyuan.common.util.CreateBeanUtil;
 import pers.boyuan.domain.bill.enums.BillEnum;
-import pers.boyuan.domain.dictionary.service.DictionaryDomainService;
+import pers.boyuan.domain.dictionary.service.DictionaryCache;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -19,7 +19,7 @@ import java.util.Objects;
  */
 public class BillModel {
 
-    private DictionaryDomainService dictionaryDomainService = CreateBeanUtil.getBean(DictionaryDomainService.class);
+    private DictionaryCache dictionaryCache = CreateBeanUtil.getBean(DictionaryCache.class);
 
     /**
      * 主键id
@@ -151,11 +151,11 @@ public class BillModel {
 
     public String getCategory() {
         if (Objects.nonNull(this.categoryCode) && Objects.isNull(this.category)) {
-            var queryResult = dictionaryDomainService
-                    .queryByTypeAndCode(DictionaryTypeConstant.BILL_CATEGORY, this.categoryCode);
+            var result = dictionaryCache
+                    .getDictionaryName(DictionaryTypeConstant.BILL_CATEGORY, this.categoryCode);
 
-            if (Objects.nonNull(queryResult)) {
-                return queryResult.getName();
+            if (Objects.nonNull(result)) {
+                return result;
             }
         }
 
@@ -165,11 +165,11 @@ public class BillModel {
     public void setCategory(String category) {
         this.category = category;
 
-        var queryResult = dictionaryDomainService
-                .queryByTypeAndCode(DictionaryTypeConstant.BILL_CATEGORY, this.categoryCode);
+        var result = dictionaryCache
+                .getDictionaryName(DictionaryTypeConstant.BILL_CATEGORY, this.categoryCode);
 
-        if (Objects.nonNull(queryResult)) {
-            this.category = queryResult.getName();
+        if (Objects.nonNull(result)) {
+            this.category = result;
         }
     }
 
