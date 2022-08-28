@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 /**
- * 接口出入参日志打印
+ * 请求日志打印
  *
  * @author ZhangBoyuan
  * @date 2022-08-28
