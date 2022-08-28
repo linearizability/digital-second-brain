@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import pers.boyuan.common.constants.ResponseEnum;
@@ -27,7 +28,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public Response handle(Exception e) {
         if (e instanceof HttpRequestMethodNotSupportedException) {
-            return Response.error("9999", e.getMessage());
+            return Response.error(ResponseEnum.EXCEPTION.getCode(), e.getMessage());
         }
         log.error("系统错误：", e);
         return Response.error(ResponseEnum.EXCEPTION);
@@ -41,23 +42,18 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = BindException.class)
     public Response handleBindException(BindException e) {
-        BindingResult bindingResult = e.getBindingResult();
-        if (bindingResult.hasErrors()) {
-            List<ObjectError> allErrors = bindingResult.getAllErrors();
-            if (CollectionUtil.isNotEmpty(allErrors)) {
-                ObjectError objectError = allErrors.get(0);
-                String defaultMessage = objectError.getDefaultMessage();
-                log.error("入参不规范：{}", defaultMessage);
-                return Response.error(ResponseEnum.PARAM_NOT_STANDARD.getCode(), objectError.getDefaultMessage());
-            }
-        }
-        log.error("未知入参异常");
-        return Response.error(ResponseEnum.EXCEPTION);
+        return paramNotStandard(e.getBindingResult());
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public Response handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        BindingResult bindingResult = e.getBindingResult();
+        return paramNotStandard(e.getBindingResult());
+    }
+
+    /**
+     * 入参相关问题异常处理
+     */
+    private Response paramNotStandard(BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
             if (CollectionUtil.isNotEmpty(allErrors)) {
