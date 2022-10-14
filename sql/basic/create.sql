@@ -1,4 +1,5 @@
--- 初始化数据库
+-- 新建数据库
+CREATE DATABASE `digital_second_brain` CHARSET = 'utf8';
 
 -- 创建字典表
 CREATE TABLE `data_dictionary`
