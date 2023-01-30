@@ -33,7 +33,6 @@
         <mybatis-plus.version>3.4.2</mybatis-plus.version>
         <mapstruct-jdk8.version>1.2.0.Final</mapstruct-jdk8.version>
         <mapstruct-processor.version>1.2.0.Final</mapstruct-processor.version>
-        <hutool-all.version>5.5.8</hutool-all.version>
         <knife4j-spring-boot-starter.version>3.0.2</knife4j-spring-boot-starter.version>
         <spring-cloud-starter-openfeign.version>2.2.6.RELEASE</spring-cloud-starter-openfeign.version>
         <fastjson.version>1.2.83</fastjson.version>
