@@ -1,11 +1,11 @@
 package pers.boyuan.infrastructure.repository.bill;
 
-import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.var;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +84,7 @@ public class BillMybatisRepository implements BillRepository {
 
         var queryResult = billService.list(queryWrapper);
 
-        if (CollectionUtil.isNotEmpty(queryResult)) {
+        if (CollectionUtils.isNotEmpty(queryResult)) {
             return BillEntityConverter.INSTANCE.entityToModelList(queryResult);
         }
 
@@ -107,7 +107,7 @@ public class BillMybatisRepository implements BillRepository {
 
         var queryResult = billMapper.selectPage(billIPage, queryWrapper);
 
-        if (CollectionUtil.isEmpty(queryResult.getRecords())) {
+        if (CollectionUtils.isEmpty(queryResult.getRecords())) {
             return result;
         }
 
@@ -126,20 +126,17 @@ public class BillMybatisRepository implements BillRepository {
     private LambdaQueryWrapper<Bill> getQueryBillWrapper(BillModel model) {
         Bill bill = BillEntityConverter.INSTANCE.modelToEntity(model);
 
-        var queryWrapper = Wrappers.<Bill>lambdaQuery()
+        return Wrappers.<Bill>lambdaQuery()
                 .eq(Objects.nonNull(bill.getId()), Bill::getId, bill.getId())
                 .eq(Objects.nonNull(bill.getType()), Bill::getType, bill.getType())
                 .eq(Objects.nonNull(bill.getCategoryCode()), Bill::getCategoryCode, bill.getCategoryCode())
                 .like(StringUtils.isNotBlank(bill.getContent()), Bill::getContent, bill.getContent())
                 .like(StringUtils.isNotBlank(bill.getRemark()), Bill::getRemark, bill.getRemark())
                 .eq(Objects.nonNull(bill.getAmount()), Bill::getAmount, bill.getAmount())
-                .between(
-                        StringUtils.isNotBlank(model.getBeginPaymentTime())
+                .between(StringUtils.isNotBlank(model.getBeginPaymentTime())
                                 && StringUtils.isNotBlank(model.getEndPaymentTime()),
                         Bill::getPaymentTime,
                         model.getBeginPaymentTime(), model.getEndPaymentTime());
-
-        return queryWrapper;
     }
 
 }

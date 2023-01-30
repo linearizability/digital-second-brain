@@ -1,11 +1,11 @@
 package pers.boyuan.domain.bill.service.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -112,7 +112,7 @@ public class BillDomainServiceImpl implements BillDomainService {
                     .head(BillImportExcelBO.class)
                     .sheet().doReadSync();
 
-            if (CollectionUtil.isNotEmpty(importExcelBOList)) {
+            if (CollectionUtils.isNotEmpty(importExcelBOList)) {
                 var saveList = BillModelConverter.INSTANCE.importExcelToModelList(importExcelBOList);
                 saveRow = saveList.size();
                 billRepository.create(saveList);

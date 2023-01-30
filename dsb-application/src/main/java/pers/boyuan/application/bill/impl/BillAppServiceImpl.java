@@ -1,9 +1,9 @@
 package pers.boyuan.application.bill.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.var;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +40,7 @@ public class BillAppServiceImpl implements BillAppService {
      */
     @Override
     public Boolean create(List<CreateBillAO> aoList) {
-        if (CollectionUtil.isEmpty(aoList)) {
+        if (CollectionUtils.isEmpty(aoList)) {
             return Boolean.FALSE;
         }
 
@@ -57,7 +57,7 @@ public class BillAppServiceImpl implements BillAppService {
      */
     @Override
     public Boolean delete(List<Long> idList) {
-        if (CollectionUtil.isEmpty(idList)) {
+        if (CollectionUtils.isEmpty(idList)) {
             return Boolean.FALSE;
         }
         return billDomainService.delete(idList);

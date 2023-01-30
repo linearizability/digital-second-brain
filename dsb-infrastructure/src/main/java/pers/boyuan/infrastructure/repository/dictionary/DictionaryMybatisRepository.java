@@ -1,9 +1,9 @@
 package pers.boyuan.infrastructure.repository.dictionary;
 
-import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.var;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -86,7 +86,7 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
     /**
      * 根据type查询字典数据
      *
-     * @param model
+     * @param model 入参
      * @return 数据库查询结果模型
      */
     @Override
@@ -96,9 +96,9 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
 
         var queryResult = dictionaryService.list(queryWrapper);
 
-        if (CollectionUtil.isNotEmpty(queryResult)) {
-            var result = DictionaryEntityConverter.INSTANCE.entityToModelList(queryResult);
-            return result;
+        if (CollectionUtils.isNotEmpty(queryResult)) {
+
+            return DictionaryEntityConverter.INSTANCE.entityToModelList(queryResult);
         }
 
         return Collections.emptyList();
@@ -121,13 +121,11 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
      * @return 生成wrapper
      */
     private LambdaQueryWrapper<Dictionary> getQueryDictionaryWrapper(DictionaryModel param) {
-        var queryWrapper = Wrappers.<Dictionary>lambdaQuery()
+        return Wrappers.<Dictionary>lambdaQuery()
                 .eq(Objects.nonNull(param.getId()), Dictionary::getId, param.getId())
                 .eq(StringUtils.isNotBlank(param.getType()), Dictionary::getType, param.getType())
                 .eq(StringUtils.isNotBlank(param.getCode()), Dictionary::getCode, param.getCode())
                 .eq(StringUtils.isNotBlank(param.getName()), Dictionary::getName, param.getName());
-
-        return queryWrapper;
     }
 
 }

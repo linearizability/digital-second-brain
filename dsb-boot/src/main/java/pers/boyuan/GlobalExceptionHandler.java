@@ -1,13 +1,12 @@
 package pers.boyuan;
 
-import cn.hutool.core.collection.CollectionUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import pers.boyuan.common.constants.ResponseEnum;
@@ -56,7 +55,7 @@ public class GlobalExceptionHandler {
     private Response paramNotStandard(BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
-            if (CollectionUtil.isNotEmpty(allErrors)) {
+            if (CollectionUtils.isNotEmpty(allErrors)) {
                 ObjectError objectError = allErrors.get(0);
                 String defaultMessage = objectError.getDefaultMessage();
                 log.error("入参不规范：{}", defaultMessage);
