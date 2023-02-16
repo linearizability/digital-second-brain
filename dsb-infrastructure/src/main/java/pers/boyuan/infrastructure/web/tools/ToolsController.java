@@ -27,7 +27,7 @@ public class ToolsController {
 
     @GetMapping("/staticVariableNameVariable")
     @ApiOperation("静态变量名生成")
-    public Response staticVariableNameVariable(@RequestParam(name = "param") String str) {
+    public Response staticVariableNameVariable(@RequestParam(name = "str") String str) {
         var result = toolsAppService.staticVariableNameVariable(str);
         return Response.success(result);
     }
