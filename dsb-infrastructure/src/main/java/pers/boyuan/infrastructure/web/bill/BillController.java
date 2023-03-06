@@ -58,8 +58,7 @@ public class BillController {
     @PostMapping("/queryPage")
     @ApiOperation("查询账单表数据分页")
     public PageResponse<QueryBillVO> queryPage(@RequestBody QueryBillPageAO ao) {
-        var iPage = billAppService.queryPage(ao);
-        return PageResponse.success(iPage.getTotal(), iPage.getCurrent(), iPage.getSize(), iPage.getRecords());
+        return billAppService.queryPage(ao);
     }
 
     @GetMapping("/exportExcel")

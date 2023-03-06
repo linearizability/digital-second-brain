@@ -1,7 +1,7 @@
 package pers.boyuan.domain.bill.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.web.multipart.MultipartFile;
+import pers.boyuan.common.dto.PageResponse;
 import pers.boyuan.domain.bill.model.BillModel;
 
 import javax.servlet.http.HttpServletResponse;
@@ -45,7 +45,7 @@ public interface BillDomainService {
      * @param model 查询账单表数据分页入参
      * @return 查询账单表分页数据
      */
-    IPage<BillModel> queryPage(BillModel model);
+    PageResponse<BillModel> queryPage(BillModel model);
 
     /**
      * 根据指定条件导出账单表数据为excel

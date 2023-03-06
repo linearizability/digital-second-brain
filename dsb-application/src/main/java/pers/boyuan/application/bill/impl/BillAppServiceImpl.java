@@ -1,10 +1,7 @@
 package pers.boyuan.application.bill.impl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.var;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +12,7 @@ import pers.boyuan.api.in.bill.UpdateBillAO;
 import pers.boyuan.api.out.bill.QueryBillVO;
 import pers.boyuan.application.bill.BillAppService;
 import pers.boyuan.application.bill.converter.BillDomainConverter;
+import pers.boyuan.common.dto.PageResponse;
 import pers.boyuan.domain.bill.service.BillDomainService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -82,16 +80,11 @@ public class BillAppServiceImpl implements BillAppService {
      * @return 查询账单表分页数据
      */
     @Override
-    public IPage<QueryBillVO> queryPage(QueryBillPageAO ao) {
-        IPage<QueryBillVO> result = new Page<>(ao.getPageIndex(), ao.getPageSize());
-
+    public PageResponse<QueryBillVO> queryPage(QueryBillPageAO ao) {
         var model = BillDomainConverter.INSTANCE.queryPageToModel(ao);
-        var modelPage = billDomainService.queryPage(model);
+        var result = billDomainService.queryPage(model);
 
-        BeanUtils.copyProperties(modelPage, result);
-        result.setRecords(BillDomainConverter.INSTANCE.modelToQueryBill(modelPage.getRecords()));
-
-        return result;
+        return PageResponse.success(result.getTotalCount(), result.getPageIndex(), result.getPageSize(), BillDomainConverter.INSTANCE.modelToQueryBill(result.getData()));
     }
 
     /**

@@ -80,32 +80,26 @@ public class BillMybatisRepository implements BillRepository {
      */
     @Override
     public List<BillModel> query(BillModel model) {
-        var queryWrapper = getQueryBillWrapper(model);
+        var queryWrapper = buildBasicQueryWrapper(model);
 
         var queryResult = billService.list(queryWrapper);
 
-        if (CollectionUtils.isNotEmpty(queryResult)) {
-            return BillEntityConverter.INSTANCE.entityToModelList(queryResult);
-        }
-
-        return Collections.emptyList();
+        return outputParametersProcessor(queryResult);
     }
 
     /**
      * 查询账单表数据分页
      *
      * @param model 查询账单表数据分页入参
-     * @param iPage 分页page
      * @return 查询账单表分页数据
      */
     @Override
-    public IPage<BillModel> queryPage(BillModel model, IPage<BillModel> iPage) {
-        var queryWrapper = getQueryBillWrapper(model);
-
-        IPage<Bill> billIPage = new Page<>(iPage.getCurrent(), iPage.getSize());
+    public IPage<BillModel> queryPage(BillModel model) {
         IPage<BillModel> result = new Page<>();
+        IPage<Bill> entityPage = new Page<>(model.getPageIndex(), model.getPageSize());
 
-        var queryResult = billMapper.selectPage(billIPage, queryWrapper);
+        var queryWrapper = buildBasicQueryWrapper(model);
+        var queryResult = billMapper.selectPage(entityPage, queryWrapper);
 
         if (CollectionUtils.isEmpty(queryResult.getRecords())) {
             return result;
@@ -123,7 +117,7 @@ public class BillMybatisRepository implements BillRepository {
      * @param model 查询条件
      * @return 生成wrapper
      */
-    private LambdaQueryWrapper<Bill> getQueryBillWrapper(BillModel model) {
+    private LambdaQueryWrapper<Bill> buildBasicQueryWrapper(BillModel model) {
         Bill bill = BillEntityConverter.INSTANCE.modelToEntity(model);
 
         return Wrappers.<Bill>lambdaQuery()
@@ -137,6 +131,20 @@ public class BillMybatisRepository implements BillRepository {
                                 && StringUtils.isNotBlank(model.getEndPaymentTime()),
                         Bill::getPaymentTime,
                         model.getBeginPaymentTime(), model.getEndPaymentTime());
+    }
+
+    /**
+     * 函数出参处理器
+     *
+     * @param entityList 实例集合
+     * @return 领域模型类
+     */
+    private List<BillModel> outputParametersProcessor(List<Bill> entityList) {
+        if (CollectionUtils.isNotEmpty(entityList)) {
+            return BillEntityConverter.INSTANCE.entityToModelList(entityList);
+        }
+
+        return Collections.emptyList();
     }
 
 }

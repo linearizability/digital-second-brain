@@ -1,12 +1,12 @@
 package pers.boyuan.application.bill;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.web.multipart.MultipartFile;
 import pers.boyuan.api.in.bill.CreateBillAO;
 import pers.boyuan.api.in.bill.ExportBillAO;
 import pers.boyuan.api.in.bill.QueryBillPageAO;
 import pers.boyuan.api.in.bill.UpdateBillAO;
 import pers.boyuan.api.out.bill.QueryBillVO;
+import pers.boyuan.common.dto.PageResponse;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -49,7 +49,7 @@ public interface BillAppService {
      * @param ao 查询账单表数据分页入参
      * @return 查询账单表分页数据
      */
-    IPage<QueryBillVO> queryPage(QueryBillPageAO ao);
+    PageResponse<QueryBillVO> queryPage(QueryBillPageAO ao);
 
     /**
      * 根据指定条件导出账单表数据为excel

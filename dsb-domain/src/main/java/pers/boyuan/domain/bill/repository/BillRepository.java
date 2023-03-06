@@ -49,9 +49,8 @@ public interface BillRepository {
      * 查询账单表数据分页
      *
      * @param model 查询账单表数据分页入参
-     * @param iPage 分页page
      * @return 查询账单表分页数据
      */
-    IPage<BillModel> queryPage(BillModel model, IPage<BillModel> iPage);
+    IPage<BillModel> queryPage(BillModel model);
 
 }

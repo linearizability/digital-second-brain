@@ -1,8 +1,6 @@
 package pers.boyuan.domain.bill.service.impl;
 
 import com.alibaba.excel.EasyExcel;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.apache.commons.collections4.CollectionUtils;
@@ -10,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pers.boyuan.common.constants.ResponseEnum;
+import pers.boyuan.common.dto.PageResponse;
 import pers.boyuan.common.exception.CustomException;
 import pers.boyuan.common.util.EasyExcelUtil;
 import pers.boyuan.domain.bill.converter.BillModelConverter;
@@ -77,8 +76,9 @@ public class BillDomainServiceImpl implements BillDomainService {
      * @return 查询账单表分页数据
      */
     @Override
-    public IPage<BillModel> queryPage(BillModel model) {
-        return billRepository.queryPage(model, new Page<>(model.getPageIndex(), model.getPageSize()));
+    public PageResponse<BillModel> queryPage(BillModel model) {
+        var queryResult = billRepository.queryPage(model);
+        return PageResponse.success(queryResult.getTotal(), queryResult.getCurrent(), queryResult.getSize(), queryResult.getRecords());
     }
 
     /**
