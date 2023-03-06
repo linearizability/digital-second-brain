@@ -1,5 +1,8 @@
 package pers.boyuan.infrastructure.web.tools;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.var;
@@ -27,9 +30,15 @@ public class ToolsController {
 
     @GetMapping("/staticVariableNameVariable")
     @ApiOperation("静态变量名生成")
-    public Response staticVariableNameVariable(@RequestParam(name = "str") String str) {
+    public Response staticVariableNameVariable(@RequestParam("str") String str) {
         var result = toolsAppService.staticVariableNameVariable(str);
         return Response.success(result);
+    }
+
+    @GetMapping("/jsonFormat")
+    @ApiOperation("json数据格式化")
+    public JsonNode jsonFormat(@RequestParam("jsonStr") String jsonStr) throws JsonProcessingException {
+        return new ObjectMapper().readValue(jsonStr, JsonNode.class);
     }
 
 }
