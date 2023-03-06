@@ -57,7 +57,7 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
     @Override
     @CacheEvict(cacheNames = "dsb:cache:dictionary", allEntries = true)
     public Boolean delete(DictionaryModel param) {
-        var queryWrapper = getQueryDictionaryWrapper(param);
+        var queryWrapper = buildBasicQueryWrapper(param);
 
         return dictionaryService.remove(queryWrapper);
     }
@@ -92,7 +92,7 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
     @Override
     @Cacheable(cacheNames = "dsb:cache:dictionary")
     public List<DictionaryModel> query(DictionaryModel model) {
-        var queryWrapper = getQueryDictionaryWrapper(model);
+        var queryWrapper = buildBasicQueryWrapper(model);
 
         var queryResult = dictionaryService.list(queryWrapper);
 
@@ -120,7 +120,7 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
      * @param param 查询条件
      * @return 生成wrapper
      */
-    private LambdaQueryWrapper<Dictionary> getQueryDictionaryWrapper(DictionaryModel param) {
+    private LambdaQueryWrapper<Dictionary> buildBasicQueryWrapper(DictionaryModel param) {
         return Wrappers.<Dictionary>lambdaQuery()
                 .eq(Objects.nonNull(param.getId()), Dictionary::getId, param.getId())
                 .eq(StringUtils.isNotBlank(param.getType()), Dictionary::getType, param.getType())
