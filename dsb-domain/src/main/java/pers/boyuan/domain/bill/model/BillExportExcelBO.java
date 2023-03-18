@@ -17,6 +17,17 @@ import java.time.LocalDateTime;
 @Data
 @ExcelIgnoreUnannotated
 public class BillExportExcelBO {
+
+    /**
+     * 账单表导出文件名
+     */
+    public static final String FILE_NAME = "账单";
+
+    /**
+     * 账单表导出sheet名
+     */
+    public static final String SHEET_NAME = "账单";
+
     /**
      * 账单类型名称
      */
