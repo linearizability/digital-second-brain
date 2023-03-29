@@ -21,6 +21,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 /**
  * 字典表底层数据库接口 Mybatis 实现类
  *
@@ -69,7 +72,7 @@ public class BillMybatisRepository implements BillRepository {
     public Boolean update(BillModel model) {
         Bill bill = BillEntityConverter.INSTANCE.modelToEntity(model);
 
-        return billMapper.updateById(bill) > 0 ? Boolean.TRUE : Boolean.FALSE;
+        return billMapper.updateById(bill) > 0 ? TRUE : FALSE;
     }
 
     /**

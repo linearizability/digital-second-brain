@@ -14,13 +14,14 @@ import pers.boyuan.api.in.dictionary.QueryDictionaryAO;
 import pers.boyuan.api.in.dictionary.UpdateDictionaryAO;
 import pers.boyuan.api.out.dictionary.QueryDictionaryVO;
 import pers.boyuan.application.dictionary.DictionaryAppService;
-import pers.boyuan.common.constants.ResponseEnum;
 import pers.boyuan.common.dto.Response;
 import pers.boyuan.common.scheme.ValidationList;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
+
+import static pers.boyuan.common.constants.ResponseEnum.FAIL;
 
 /**
  * 字典表 前端控制器
@@ -40,21 +41,21 @@ public class DictionaryController {
     @ApiOperation("创建字典数据")
     public Response<Boolean> create(@RequestBody @Valid ValidationList<CreateDictionaryAO> aoList) {
         var createFlag = dictionaryAppService.create(aoList);
-        return createFlag ? Response.success() : Response.error(ResponseEnum.FAIL);
+        return createFlag ? Response.success() : Response.error(FAIL);
     }
 
     @PostMapping("/delete")
     @ApiOperation("根据参数删除词典")
     public Response<Boolean> delete(@RequestBody DeleteDictionaryAO ao) {
         var deleteFlag = dictionaryAppService.delete(ao);
-        return deleteFlag ? Response.success() : Response.error(ResponseEnum.FAIL);
+        return deleteFlag ? Response.success() : Response.error(FAIL);
     }
 
     @PostMapping("/update")
     @ApiOperation("更新字典数据")
     public Response<Boolean> update(@RequestBody UpdateDictionaryAO ao) {
         var updateFlag = dictionaryAppService.update(ao);
-        return updateFlag ? Response.success() : Response.error(ResponseEnum.FAIL);
+        return updateFlag ? Response.success() : Response.error(FAIL);
     }
 
     @PostMapping("/query")

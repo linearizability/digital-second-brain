@@ -12,13 +12,15 @@ import pers.boyuan.api.in.bill.QueryBillPageAO;
 import pers.boyuan.api.in.bill.UpdateBillAO;
 import pers.boyuan.api.out.bill.QueryBillVO;
 import pers.boyuan.application.bill.BillAppService;
-import pers.boyuan.common.constants.ResponseEnum;
 import pers.boyuan.common.dto.PageResponse;
 import pers.boyuan.common.dto.Response;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
+
+import static java.lang.Boolean.TRUE;
+import static pers.boyuan.common.constants.ResponseEnum.FAIL;
 
 /**
  * 消费账单表 前端控制器
@@ -38,21 +40,21 @@ public class BillController {
     @ApiOperation("创建账单表数据")
     public Response<Boolean> create(@RequestBody List<CreateBillAO> aoList) {
         var createFlag = billAppService.create(aoList);
-        return createFlag ? Response.success(Boolean.TRUE) : Response.error(ResponseEnum.FAIL);
+        return createFlag ? Response.success(TRUE) : Response.error(FAIL);
     }
 
     @PostMapping("/delete")
     @ApiOperation("根据主键id删除账单表数据")
     public Response<Boolean> delete(@RequestBody List<Long> idList) {
         var deleteFlag = billAppService.delete(idList);
-        return deleteFlag ? Response.success(Boolean.TRUE) : Response.error(ResponseEnum.FAIL);
+        return deleteFlag ? Response.success(TRUE) : Response.error(FAIL);
     }
 
     @PostMapping("/update")
     @ApiOperation("更新账单表数据")
     public Response<Boolean> update(@RequestBody @Valid UpdateBillAO ao) {
         var updateFlag = billAppService.update(ao);
-        return updateFlag ? Response.success(Boolean.TRUE) : Response.error(ResponseEnum.FAIL);
+        return updateFlag ? Response.success(TRUE) : Response.error(FAIL);
     }
 
     @PostMapping("/queryPage")
