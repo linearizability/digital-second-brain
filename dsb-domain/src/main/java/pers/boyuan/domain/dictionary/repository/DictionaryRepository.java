@@ -1,7 +1,9 @@
 package pers.boyuan.domain.dictionary.repository;
 
+import org.springframework.validation.annotation.Validated;
 import pers.boyuan.domain.dictionary.model.DictionaryModel;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -10,6 +12,7 @@ import java.util.List;
  * @author ZhangBoyuan
  * @date 2022-06-11
  */
+@Validated
 public interface DictionaryRepository {
 
     /**
@@ -26,7 +29,7 @@ public interface DictionaryRepository {
      * @param model 删除参数
      * @return 是否删除成功
      */
-    Boolean delete(DictionaryModel model);
+    Boolean delete(@NotNull(message = "删除字典入参不可为空") DictionaryModel model);
 
     /**
      * 根据参数更新字典数据
