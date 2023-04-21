@@ -121,6 +121,9 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
      * @return 生成wrapper
      */
     private LambdaQueryWrapper<Dictionary> buildBasicQueryWrapper(DictionaryModel param) {
+        if (Objects.isNull(param)) {
+            return Wrappers.<Dictionary>lambdaQuery();
+        }
         return Wrappers.<Dictionary>lambdaQuery()
                 .eq(Objects.nonNull(param.getId()), Dictionary::getId, param.getId())
                 .eq(StringUtils.isNotBlank(param.getType()), Dictionary::getType, param.getType())

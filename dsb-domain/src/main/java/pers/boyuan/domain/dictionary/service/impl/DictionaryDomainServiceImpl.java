@@ -104,10 +104,8 @@ public class DictionaryDomainServiceImpl implements DictionaryDomainService {
             return Collections.emptyMap();
         }
 
-        var result = queryResult.stream()
+        return queryResult.stream()
                 .collect(Collectors.groupingBy(DictionaryModel::getType));
-
-        return result;
     }
 
 }
