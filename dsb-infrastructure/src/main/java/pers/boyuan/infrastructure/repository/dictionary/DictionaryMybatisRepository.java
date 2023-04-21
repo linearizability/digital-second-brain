@@ -96,7 +96,7 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
     @Cacheable(cacheNames = "dsb:cache:dictionary")
     public List<DictionaryModel> query(DictionaryModel model) {
         if (Objects.isNull(model)) {
-            return DictionaryEntityConverter.INSTANCE.entityToModelList(dictionaryService.list());
+            return getAll();
         }
         var queryWrapper = buildBasicQueryWrapper(model);
 
