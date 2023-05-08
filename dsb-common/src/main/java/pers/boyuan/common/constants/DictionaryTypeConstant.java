@@ -10,6 +10,6 @@ public class DictionaryTypeConstant {
     /**
      * 账单类型字典表type
      */
-    public static final String BILL_CATEGORY = "bill_category";
+    public static final String BILL_CATEGORY = "BillCategory";
 
 }

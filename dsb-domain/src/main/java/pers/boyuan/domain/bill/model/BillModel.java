@@ -11,6 +11,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import static pers.boyuan.common.constants.DictionaryTypeConstant.BILL_CATEGORY;
+
 /**
  * 账单表领域层模型
  *
@@ -152,7 +154,7 @@ public class BillModel {
     public String getCategory() {
         if (Objects.nonNull(this.categoryCode) && Objects.isNull(this.category)) {
             var result = dictionaryCache
-                    .getDictionaryName(DictionaryTypeConstant.BILL_CATEGORY, this.categoryCode);
+                    .getDictionaryName(BILL_CATEGORY, this.categoryCode);
 
             if (Objects.nonNull(result)) {
                 return result;
@@ -166,7 +168,7 @@ public class BillModel {
         this.category = category;
 
         var result = dictionaryCache
-                .getDictionaryName(DictionaryTypeConstant.BILL_CATEGORY, this.categoryCode);
+                .getDictionaryName(BILL_CATEGORY, this.categoryCode);
 
         if (Objects.nonNull(result)) {
             this.category = result;
