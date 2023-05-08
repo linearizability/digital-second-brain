@@ -37,8 +37,8 @@ DROP TABLE IF EXISTS `data_bill_statistics`;
 CREATE TABLE `data_bill_statistics`
 (
     `id`               BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '自增主键id',
-    `dimension_code`   VARCHAR(10)    NOT NULL COMMENT '统计维度，详见字典表BillDimensionCode类型',
-    `indicator_code`   VARCHAR(10)    NOT NULL COMMENT '统计指标，详见字典表BillIndicatorCode类型',
+    `dimension`   VARCHAR(10)    NOT NULL COMMENT '统计维度，详见字典表BillDimension类型',
+    `indicator`   VARCHAR(10)    NOT NULL COMMENT '统计指标，详见字典表BillIndicator类型',
     `bill_id`          BIGINT COMMENT '消费账单表主键id',
     `statistics_value` DECIMAL(20, 2) NOT NULL COMMENT '统计指标值',
     `year`             INT(4) NOT NULL COMMENT '当前数据所统计年份：yyyy',
