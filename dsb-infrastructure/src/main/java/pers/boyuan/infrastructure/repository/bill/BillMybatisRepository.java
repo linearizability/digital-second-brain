@@ -20,6 +20,7 @@ import pers.boyuan.infrastructure.db.service.IBillService;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -143,11 +144,10 @@ public class BillMybatisRepository implements BillRepository {
      * @return 领域模型类
      */
     private List<BillModel> outputParametersProcessor(List<Bill> entityList) {
-        if (CollectionUtils.isNotEmpty(entityList)) {
-            return BillEntityConverter.INSTANCE.entityToModelList(entityList);
-        }
-
-        return Collections.emptyList();
+        return Optional.ofNullable(entityList)
+                .filter(CollectionUtils::isNotEmpty)
+                .map(BillEntityConverter.INSTANCE::entityToModelList)
+                .orElse(Collections.emptyList());
     }
 
 }
