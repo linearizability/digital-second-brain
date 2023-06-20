@@ -17,6 +17,7 @@ import pers.boyuan.infrastructure.db.entity.Bill;
 import pers.boyuan.infrastructure.db.mapper.BillMapper;
 import pers.boyuan.infrastructure.db.service.IBillService;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -142,7 +143,7 @@ public class BillMybatisRepository implements BillRepository {
      * @param entityList 实例集合
      * @return 领域模型类
      */
-    private List<BillModel> outputParametersProcessor(List<Bill> entityList) {
+    private List<BillModel> outputParametersProcessor(Collection<Bill> entityList) {
         return CollectionUtils.emptyIfNull(entityList)
                 .stream()
                 .map(BillEntityConverter.INSTANCE::entityToModel)
