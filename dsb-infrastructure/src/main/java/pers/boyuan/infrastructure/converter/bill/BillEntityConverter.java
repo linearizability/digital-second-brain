@@ -20,8 +20,10 @@ public interface BillEntityConverter {
 
     Bill modelToEntity(BillModel model);
 
-    List<Bill> modelToEntityList(List<BillModel> modelList);
+    List<Bill> modelToEntity(List<BillModel> modelList);
 
-    List<BillModel> entityToModelList(List<Bill> entityList);
+    List<BillModel> entityToModel(List<Bill> entityList);
+
+    BillModel entityToModel(Bill entity);
 
 }

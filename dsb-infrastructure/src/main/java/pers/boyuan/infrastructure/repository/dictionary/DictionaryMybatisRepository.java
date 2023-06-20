@@ -46,7 +46,7 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
     @Override
     @CacheEvict(cacheNames = "dsb:cache:dictionary", allEntries = true)
     public Boolean create(List<DictionaryModel> modelList) {
-        var saveList = DictionaryEntityConverter.INSTANCE.modelToEntityList(modelList);
+        var saveList = DictionaryEntityConverter.INSTANCE.modelToEntity(modelList);
 
         return dictionaryService.saveBatch(saveList);
     }
@@ -103,7 +103,7 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
         var queryResult = dictionaryService.list(queryWrapper);
 
         if (CollectionUtils.isNotEmpty(queryResult)) {
-            return DictionaryEntityConverter.INSTANCE.entityToModelList(queryResult);
+            return DictionaryEntityConverter.INSTANCE.entityToModel(queryResult);
         }
 
         return Collections.emptyList();
@@ -116,7 +116,7 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
      */
     @Override
     public List<DictionaryModel> getAll() {
-        return DictionaryEntityConverter.INSTANCE.entityToModelList(dictionaryService.list());
+        return DictionaryEntityConverter.INSTANCE.entityToModel(dictionaryService.list());
     }
 
     /**

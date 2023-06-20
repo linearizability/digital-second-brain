@@ -17,10 +17,9 @@ import pers.boyuan.infrastructure.db.entity.Bill;
 import pers.boyuan.infrastructure.db.mapper.BillMapper;
 import pers.boyuan.infrastructure.db.service.IBillService;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -48,7 +47,7 @@ public class BillMybatisRepository implements BillRepository {
      */
     @Override
     public Boolean create(List<BillModel> modelList) {
-        var billList = BillEntityConverter.INSTANCE.modelToEntityList(modelList);
+        var billList = BillEntityConverter.INSTANCE.modelToEntity(modelList);
         return billService.saveBatch(billList);
     }
 
@@ -110,7 +109,7 @@ public class BillMybatisRepository implements BillRepository {
         }
 
         BeanUtils.copyProperties(queryResult, result);
-        result.setRecords(BillEntityConverter.INSTANCE.entityToModelList(queryResult.getRecords()));
+        result.setRecords(BillEntityConverter.INSTANCE.entityToModel(queryResult.getRecords()));
 
         return result;
     }
@@ -144,10 +143,10 @@ public class BillMybatisRepository implements BillRepository {
      * @return 领域模型类
      */
     private List<BillModel> outputParametersProcessor(List<Bill> entityList) {
-        return Optional.ofNullable(entityList)
-                .filter(CollectionUtils::isNotEmpty)
-                .map(BillEntityConverter.INSTANCE::entityToModelList)
-                .orElse(Collections.emptyList());
+        return CollectionUtils.emptyIfNull(entityList)
+                .stream()
+                .map(BillEntityConverter.INSTANCE::entityToModel)
+                .collect(Collectors.toList());
     }
 
 }
