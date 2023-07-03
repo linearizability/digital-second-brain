@@ -67,12 +67,12 @@ public class BillDomainServiceImpl implements BillDomainService {
     /**
      * 查询账单表数据分页
      *
-     * @param model 查询账单表数据分页入参
+     * @param param 查询账单表数据分页入参
      * @return 查询账单表分页数据
      */
     @Override
-    public PageResponse<BillModel> queryPage(BillModel model) {
-        var queryResult = billRepository.queryPage(model);
+    public PageResponse<BillModel> queryPage(BillModel param) {
+        var queryResult = billRepository.queryPage(param);
         return PageResponse.success(queryResult.getTotal(), queryResult.getCurrent(), queryResult.getSize(), queryResult.getRecords());
     }
 

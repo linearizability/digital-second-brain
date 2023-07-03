@@ -81,8 +81,8 @@ public class BillAppServiceImpl implements BillAppService {
      */
     @Override
     public PageResponse<QueryBillVO> queryPage(QueryBillPageAO ao) {
-        var model = BillDomainConverter.INSTANCE.queryPageToModel(ao);
-        var result = billDomainService.queryPage(model);
+        var param = BillDomainConverter.INSTANCE.queryPageToModel(ao);
+        var result = billDomainService.queryPage(param);
 
         return PageResponse.success(result.getTotalCount(), result.getPageIndex(), result.getPageSize(), BillDomainConverter.INSTANCE.modelToQueryBill(result.getData()));
     }

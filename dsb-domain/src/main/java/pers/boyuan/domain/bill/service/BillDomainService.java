@@ -42,10 +42,10 @@ public interface BillDomainService {
     /**
      * 查询账单表数据分页
      *
-     * @param model 查询账单表数据分页入参
+     * @param param 查询账单表数据分页入参
      * @return 查询账单表分页数据
      */
-    PageResponse<BillModel> queryPage(BillModel model);
+    PageResponse<BillModel> queryPage(BillModel param);
 
     /**
      * 根据指定条件导出账单表数据为excel

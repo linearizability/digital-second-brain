@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.var;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pers.boyuan.domain.bill.model.BillModel;
@@ -26,7 +25,7 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
 /**
- * 字典表底层数据库接口 Mybatis 实现类
+ * 账单表底层数据库接口 Mybatis 实现类
  *
  * @author ZhangBoyuan
  * @date 2022-06-22
@@ -94,25 +93,17 @@ public class BillMybatisRepository implements BillRepository {
     /**
      * 查询账单表数据分页
      *
-     * @param model 查询账单表数据分页入参
+     * @param param 查询账单表数据分页入参
      * @return 查询账单表分页数据
      */
     @Override
-    public IPage<BillModel> queryPage(BillModel model) {
-        IPage<BillModel> result = new Page<>();
-        IPage<Bill> entityPage = new Page<>(model.getPageIndex(), model.getPageSize());
+    public IPage<BillModel> queryPage(BillModel param) {
+        IPage<Bill> pageParam = new Page<>(param.getPageIndex(), param.getPageSize());
 
-        var queryWrapper = buildBasicQueryWrapper(model);
-        var queryResult = billMapper.selectPage(entityPage, queryWrapper);
+        var queryWrapper = buildBasicQueryWrapper(param);
+        var queryResult = billMapper.selectPage(pageParam, queryWrapper);
 
-        if (CollectionUtils.isEmpty(queryResult.getRecords())) {
-            return result;
-        }
-
-        BeanUtils.copyProperties(queryResult, result);
-        result.setRecords(BillEntityConverter.INSTANCE.entityToModel(queryResult.getRecords()));
-
-        return result;
+        return queryResult.convert(BillEntityConverter.INSTANCE::entityToModel);
     }
 
     /**
