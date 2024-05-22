@@ -2,18 +2,15 @@ package pers.boyuan.domain.dictionary.service;
 
 import com.google.common.collect.Table;
 import com.google.common.collect.TreeBasedTable;
-import lombok.var;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Map;
 
 /**
  * 字典表缓存类
  *
  * @author ZhangBoyuan
- * @date 2022-08-22
+ * @since 2022-08-22
  */
 @Component
 public class DictionaryCache implements InitializingBean {

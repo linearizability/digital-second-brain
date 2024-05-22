@@ -2,16 +2,17 @@ package pers.boyuan.common.util;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 import pers.boyuan.common.constants.ResponseEnum;
 import pers.boyuan.common.exception.CustomException;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.Map;
  * easy excel 导出工具类
  *
  * @author ZhangBoyuan
- * @date 2022-07-18
+ * @since 2022-07-18
  */
 @Slf4j
 public class EasyExcelUtil {
@@ -31,7 +32,7 @@ public class EasyExcelUtil {
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("UTF-8");
         try {
-            fileName = URLEncoder.encode(fileName, "UTF-8");
+            fileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
             response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
             EasyExcel.write(response.getOutputStream(), tClass)
                     .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())

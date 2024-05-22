@@ -2,7 +2,7 @@ package pers.boyuan.infrastructure.repository.dictionary;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import lombok.var;
+import jakarta.validation.constraints.NotNull;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +14,8 @@ import pers.boyuan.domain.dictionary.model.DictionaryModel;
 import pers.boyuan.domain.dictionary.repository.DictionaryRepository;
 import pers.boyuan.infrastructure.converter.dictionary.DictionaryEntityConverter;
 import pers.boyuan.infrastructure.db.entity.Dictionary;
-import pers.boyuan.infrastructure.db.mapper.DictionaryMapper;
 import pers.boyuan.infrastructure.db.service.IDictionaryService;
 
-import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -26,16 +24,14 @@ import java.util.Objects;
  * 字典表底层数据库接口 Mybatis 实现类
  *
  * @author ZhangBoyuan
- * @date 2022-06-11
+ * @since 2022-06-11
  */
 @Validated
 @Component
 public class DictionaryMybatisRepository implements DictionaryRepository {
-    @Autowired
-    private IDictionaryService dictionaryService;
 
     @Autowired
-    private DictionaryMapper dictionaryMapper;
+    private IDictionaryService dictionaryService;
 
     /**
      * 创建字典

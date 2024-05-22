@@ -5,7 +5,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -21,16 +20,13 @@ import static pers.boyuan.common.constants.ResponseEnum.PARAM_NOT_STANDARD;
  * 全局异常捕获
  *
  * @author ZhangBoyuan
- * @date 2022-06-13
+ * @since 2022-06-13
  */
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public Response handle(Exception e) {
-        if (e instanceof HttpRequestMethodNotSupportedException) {
-            return Response.error(EXCEPTION.getCode(), e.getMessage());
-        }
         log.error("系统错误：", e);
         return Response.error(EXCEPTION);
     }

@@ -1,13 +1,13 @@
 package pers.boyuan.common.scheme;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
+
 import java.util.*;
 
 /**
  * 可被校验的List
  *
  * @author ZhangBoyuan
- * @date 2022-06-12
  * @since 解决对象列表@Valid不生效问题
  */
 public class ValidationList<T> implements List<T> {

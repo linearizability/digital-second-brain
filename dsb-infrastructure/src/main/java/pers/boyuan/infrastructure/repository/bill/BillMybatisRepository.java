@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import lombok.var;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ import static java.lang.Boolean.TRUE;
  * 账单表底层数据库接口 Mybatis 实现类
  *
  * @author ZhangBoyuan
- * @date 2022-06-22
+ * @since 2022-06-22
  */
 @Component
 public class BillMybatisRepository implements BillRepository {

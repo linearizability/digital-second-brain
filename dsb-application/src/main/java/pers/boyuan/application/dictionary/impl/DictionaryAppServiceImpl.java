@@ -1,6 +1,5 @@
 package pers.boyuan.application.dictionary.impl;
 
-import lombok.var;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ import java.util.Map;
  * 字典表应用服务实现类
  *
  * @author ZhangBoyuan
- * @date 2022-06-11
+ * @since 2022-06-11
  */
 @Service
 public class DictionaryAppServiceImpl implements DictionaryAppService {

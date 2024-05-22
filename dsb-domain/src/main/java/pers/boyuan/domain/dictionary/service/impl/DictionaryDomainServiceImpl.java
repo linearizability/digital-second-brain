@@ -1,6 +1,5 @@
 package pers.boyuan.domain.dictionary.service.impl;
 
-import lombok.var;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
  * 字典表领域层服务实现类
  *
  * @author ZhangBoyuan
- * @date 2022-06-11
+ * @since 2022-06-11
  */
 @Service
 public class DictionaryDomainServiceImpl implements DictionaryDomainService {

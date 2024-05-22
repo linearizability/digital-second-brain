@@ -10,14 +10,18 @@ import java.util.List;
 
 /**
  * @author ZhangBoyuan
- * @date 2022-06-11
+ * @since 2022-06-11
  */
 @Mapper
 public interface BillModelConverter {
 
     BillModelConverter INSTANCE = Mappers.getMapper(BillModelConverter.class);
 
+    BillExportExcelBO modelToExportExcelBO(BillModel model);
+
     List<BillExportExcelBO> modelToExportExcelBOList(List<BillModel> modelList);
+
+    BillModel importExcelToModel(BillImportExcelBO bo);
 
     List<BillModel> importExcelToModelList(List<BillImportExcelBO> boList);
 

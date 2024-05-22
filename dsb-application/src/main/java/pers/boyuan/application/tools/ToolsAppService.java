@@ -8,7 +8,7 @@ import pers.boyuan.application.tools.impl.ToolsAppServiceImpl;
  * 常用工具汇总应用服务实现类
  *
  * @author ZhangBoyuan
- * @date 2023-02-16
+ * @since 2023-02-16
  */
 @Service
 public class ToolsAppService implements ToolsAppServiceImpl {

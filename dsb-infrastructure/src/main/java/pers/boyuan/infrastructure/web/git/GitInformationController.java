@@ -1,7 +1,7 @@
 package pers.boyuan.infrastructure.web.git;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +19,11 @@ import java.util.Properties;
  * git相关信息接口
  *
  * @author ZhangBoyuan
- * @date 2022-10-14
+ * @since 2022-10-14
  */
 @Slf4j
 @RestController
-@Api(tags = "获取git信息")
+@Tag(name = "获取git信息")
 @RequestMapping("/gitInformation")
 public class GitInformationController {
 
@@ -34,7 +34,7 @@ public class GitInformationController {
         String commitTime;
     }
 
-    @ApiOperation("获取本次打包git信息")
+    @Operation(summary = "获取本次打包git信息")
     @GetMapping("/detail")
     public Response getDetail() {
         GitDetail gitDetail = new GitDetail();

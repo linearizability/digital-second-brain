@@ -3,7 +3,6 @@ package pers.boyuan.infrastructure.aop;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import lombok.var;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
  * 请求日志打印
  *
  * @author ZhangBoyuan
- * @date 2022-08-28
+ * @since 2022-08-28
  */
 @Aspect
 @Order(-1)

@@ -1,16 +1,16 @@
 package pers.boyuan.domain.dictionary.repository;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
 import pers.boyuan.domain.dictionary.model.DictionaryModel;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
  * 字典表底层数据库接口
  *
  * @author ZhangBoyuan
- * @date 2022-06-11
+ * @since 2022-06-11
  */
 @Validated
 public interface DictionaryRepository {

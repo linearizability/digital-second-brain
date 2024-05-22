@@ -1,7 +1,7 @@
 package pers.boyuan.domain.bill.service.impl;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import lombok.var;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,14 +15,13 @@ import pers.boyuan.domain.bill.model.BillModel;
 import pers.boyuan.domain.bill.repository.BillRepository;
 import pers.boyuan.domain.bill.service.BillDomainService;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
  * 账单表领域层服务实现类
  *
  * @author ZhangBoyuan
- * @date 2022-06-22
+ * @since 2022-06-22
  */
 @Slf4j
 @Service
@@ -99,7 +98,7 @@ public class BillDomainServiceImpl implements BillDomainService {
      */
     @Override
     public Integer importExcel(MultipartFile excelFile) {
-        Integer saveRow = 0;
+        int saveRow = 0;
 
         var importExcelBOList = EasyExcelUtil.easyExcelRead(excelFile, BillImportExcelBO.class);
         if (CollectionUtils.isNotEmpty(importExcelBOList)) {
