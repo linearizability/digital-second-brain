@@ -2,6 +2,7 @@ package pers.boyuan.infrastructure.aop;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -62,11 +63,13 @@ public class ResponseBodyAspect {
     private void printRequestParam(String requestId, MethodSignature signature, Object[] args) {
         var argList = Arrays.stream(args).collect(Collectors.toList());
         try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
             log.info("requestId：{}, 调用方法：{}.{} 请求参数：{}",
                     requestId,
                     signature.getDeclaringType().getSimpleName(),
                     signature.getMethod().getName(),
-                    argList.size() > 0 ? new ObjectMapper().writeValueAsString(argList) : "");
+                    !argList.isEmpty() ? mapper.writeValueAsString(argList) : "");
         } catch (JsonProcessingException e) {
             log.error(e.getMessage(), e);
         }
