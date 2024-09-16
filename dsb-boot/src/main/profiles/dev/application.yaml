@@ -1,0 +1,56 @@
+server:
+  port: 9826
+  servlet:
+    context-path: /dsb
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  application:
+    name: dsb
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${dbs_mysql_host}:${dbs_mysql_port}/${dbs_mysql_database}?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: ${dbs_mysql_username}
+    password: ${dbs_mysql_password}
+  data:
+    redis:
+      host: ${dbs_redis_host}
+      password: ${dbs_redis_password}
+      port: ${dbs_redis_port}
+      database: ${dbs_redis_database}
+      timeout: 3000
+  main:
+    allow-bean-definition-overriding: true
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:mybatis/*.xml
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: default
+      packages-to-scan: pers.boyuan.infrastructure.web
+      paths-to-match: /**
+  swagger-ui:
+    operations-sorter: alpha
+    path: /swagger-ui.html
+    tags-sorter: alpha
+
+jasypt:
+  encryptor:
+    algorithm: ''
+    ivGeneratorClassname: org.jasypt.iv.NoIvGenerator
+    password: ''
+
+thirdparty:
+  weather:
+    service-name: thirdparty-weather
+    url: http://wthrcdn.etouch.cn
