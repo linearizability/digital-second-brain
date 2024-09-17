@@ -11,25 +11,18 @@
 
     <artifactId>dsb-application</artifactId>
 
-    <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-    </properties>
-
     <dependencies>
-
         <dependency>
             <groupId>pres.boyuan</groupId>
             <artifactId>dsb-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${dsb-project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>pres.boyuan</groupId>
             <artifactId>dsb-domain</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${dsb-project.version}</version>
         </dependency>
-
     </dependencies>
 
 </project>

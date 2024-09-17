@@ -69,7 +69,7 @@ public class ResponseBodyAspect {
                     requestId,
                     signature.getDeclaringType().getSimpleName(),
                     signature.getMethod().getName(),
-                    !argList.isEmpty() ? mapper.writeValueAsString(argList) : "");
+                    argList.isEmpty() ? "" : mapper.writeValueAsString(argList));
         } catch (JsonProcessingException e) {
             log.error(e.getMessage(), e);
         }
