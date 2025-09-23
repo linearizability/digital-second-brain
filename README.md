@@ -2,7 +2,7 @@
 
 ## 项目架构
 
-本项目设计思想参考领域驱动设计（Domain-driven design），架构参考六边形架构， 将项目分为六大模块：api、application、boot、common、domain、infrastructure、thirdparty
+本项目设计思想参考领域驱动设计（Domain-driven design），架构参考六边形架构， 将项目分为七大模块：api、application、boot、common、domain、infrastructure、thirdparty
 
 ## 模块介绍
 
