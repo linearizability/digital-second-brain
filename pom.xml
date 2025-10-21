@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.3</version>
+        <version>3.5.6</version>
         <relativePath/> <!-- 设定一个空值默认值为../pom.xml 表示将始终从父级仓库中获取，不从本地路径获取 -->
     </parent>
 
@@ -27,35 +27,27 @@
     </modules>
 
     <properties>
-        <java.version>21</java.version>
+        <java.version>25</java.version>
         <revision>1.0-SNAPSHOT</revision>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
         <mysql-connector-java.version>8.0.33</mysql-connector-java.version>
-        <mybatis-plus-spring-boot3-starter.version>3.5.6</mybatis-plus-spring-boot3-starter.version>
-        <mapstruct.version>1.5.5.Final</mapstruct.version>
-        <mapstruct-processor.version>1.5.5.Final</mapstruct-processor.version>
-        <commons-collections4.version>4.4</commons-collections4.version>
+        <mybatis-plus-spring-boot3-starter.version>3.5.14</mybatis-plus-spring-boot3-starter.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
+        <mapstruct-processor.version>1.6.3</mapstruct-processor.version>
+        <commons-collections4.version>4.5.0</commons-collections4.version>
         <knife4j-openapi3-jakarta-spring-boot-starter.version>4.5.0
         </knife4j-openapi3-jakarta-spring-boot-starter.version>
-        <spring-cloud-starter-openfeign.version>4.1.1</spring-cloud-starter-openfeign.version>
-        <easyexcel.version>3.3.4</easyexcel.version>
-        <jasypt-spring-boot-starter.version>3.0.4</jasypt-spring-boot-starter.version>
-        <guava.version>33.2.0-jre</guava.version>
+        <spring-cloud-starter-openfeign.version>4.3.0</spring-cloud-starter-openfeign.version>
+        <easyexcel.version>4.0.3</easyexcel.version>
+        <jasypt-spring-boot-starter.version>3.0.5</jasypt-spring-boot-starter.version>
+        <guava.version>33.5.0-jre</guava.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-dependencies</artifactId>
-            <version>3.2.5</version>
-            <type>pom</type>
-            <scope>import</scope>
         </dependency>
 
         <dependency>
@@ -119,6 +111,11 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+            <version>${mybatis-plus-spring-boot3-starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-jsqlparser</artifactId>
             <version>${mybatis-plus-spring-boot3-starter.version}</version>
         </dependency>
 

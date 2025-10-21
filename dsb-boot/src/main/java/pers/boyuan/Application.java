@@ -19,9 +19,9 @@ import java.util.Objects;
 @SpringBootApplication
 public class Application {
 
-    public static void main(String[] args) {
+    static void main() {
         loadEnvVariables();
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(Application.class);
     }
 
     private static void loadEnvVariables() {
