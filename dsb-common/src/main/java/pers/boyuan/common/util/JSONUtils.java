@@ -1,4 +1,4 @@
-package pers.boyuan.infrastructure.util;
+package pers.boyuan.common.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
