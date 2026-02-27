@@ -22,11 +22,10 @@ public class StringUnzipUtil {
             InputStream inputStream = new ByteArrayInputStream(byteArray);
             GZIPInputStream gzipInputStream = new GZIPInputStream(inputStream);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(gzipInputStream));
-            String result = bufferedReader
+            return bufferedReader
                     .lines()
                     .collect(Collectors.joining());
 
-            return result;
         } catch (IOException e) {
             e.printStackTrace();
         }

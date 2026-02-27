@@ -10,9 +10,14 @@ import java.util.*;
  */
 public class PageResponse<T> extends Response {
     /**
-     * 总页数
+     * 数据总数
      */
     private Long totalCount = 0L;
+
+    /**
+     * 总页数
+     */
+    private Long pageCount = 1L;
 
     /**
      * 当前页
@@ -35,6 +40,11 @@ public class PageResponse<T> extends Response {
 
     public void setTotalCount(Long totalCount) {
         this.totalCount = totalCount;
+    }
+
+    public Long getPageCount() {
+        return this.totalCount % this.pageSize == 0 ? this.totalCount
+                / this.pageSize : (this.totalCount / this.pageSize) + 1;
     }
 
     public Long getPageSize() {
@@ -92,6 +102,17 @@ public class PageResponse<T> extends Response {
         pageResponse.setTotalCount(totalCount);
         pageResponse.setPageIndex(pageIndex);
         pageResponse.setPageSize(pageSize);
+        pageResponse.setData(data);
+
+        return pageResponse;
+    }
+
+    public static <T> PageResponse<T> success(Integer totalCount, Integer pageIndex, Integer pageSize, Collection<T> data) {
+        PageResponse<T> pageResponse = new PageResponse<>();
+        pageResponse.setSuccess(Boolean.TRUE);
+        pageResponse.setTotalCount(Long.valueOf(totalCount));
+        pageResponse.setPageIndex(Long.valueOf(pageIndex));
+        pageResponse.setPageSize(Long.valueOf(pageSize));
         pageResponse.setData(data);
 
         return pageResponse;

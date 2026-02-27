@@ -15,10 +15,9 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * @author ZhangBoyuan
- * @date 2022-06-14
+ * @since 2022-06-14
  */
 @Configuration
 public class FeignConfiguration {

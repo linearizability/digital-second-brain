@@ -1,7 +1,7 @@
 package pers.boyuan.domain.dictionary.service.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
 import lombok.var;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class DictionaryDomainServiceImpl implements DictionaryDomainService {
      */
     @Override
     public Boolean create(List<DictionaryModel> modelList) {
-        if (CollectionUtil.isEmpty(modelList)) {
+        if (CollectionUtils.isEmpty(modelList)) {
             return Boolean.FALSE;
         }
 
@@ -100,14 +100,12 @@ public class DictionaryDomainServiceImpl implements DictionaryDomainService {
     public Map<String, List<DictionaryModel>> query(DictionaryModel model) {
         var queryResult = dictionaryRepository.query(model);
 
-        if (CollectionUtil.isEmpty(queryResult)) {
+        if (CollectionUtils.isEmpty(queryResult)) {
             return Collections.emptyMap();
         }
 
-        var result = queryResult.stream()
+        return queryResult.stream()
                 .collect(Collectors.groupingBy(DictionaryModel::getType));
-
-        return result;
     }
 
 }

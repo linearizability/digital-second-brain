@@ -1,16 +1,12 @@
 package pers.boyuan.domain.bill.service.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
-import com.alibaba.excel.EasyExcel;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import pers.boyuan.common.constants.ResponseEnum;
-import pers.boyuan.common.exception.CustomException;
+import pers.boyuan.common.dto.PageResponse;
 import pers.boyuan.common.util.EasyExcelUtil;
 import pers.boyuan.domain.bill.converter.BillModelConverter;
 import pers.boyuan.domain.bill.model.BillExportExcelBO;
@@ -20,8 +16,6 @@ import pers.boyuan.domain.bill.repository.BillRepository;
 import pers.boyuan.domain.bill.service.BillDomainService;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -73,12 +67,13 @@ public class BillDomainServiceImpl implements BillDomainService {
     /**
      * 查询账单表数据分页
      *
-     * @param model 查询账单表数据分页入参
+     * @param param 查询账单表数据分页入参
      * @return 查询账单表分页数据
      */
     @Override
-    public IPage<BillModel> queryPage(BillModel model) {
-        return billRepository.queryPage(model, new Page<>(model.getPageIndex(), model.getPageSize()));
+    public PageResponse<BillModel> queryPage(BillModel param) {
+        var queryResult = billRepository.queryPage(param);
+        return PageResponse.success(queryResult.getTotal(), queryResult.getCurrent(), queryResult.getSize(), queryResult.getRecords());
     }
 
     /**
@@ -93,7 +88,7 @@ public class BillDomainServiceImpl implements BillDomainService {
 
         var exportList = BillModelConverter.INSTANCE.modelToExportExcelBOList(queryResult);
 
-        EasyExcelUtil.easyExcelWrite(response, BillExportExcelBO.class, "账单", "账单", exportList);
+        EasyExcelUtil.easyExcelWrite(response, BillExportExcelBO.class, BillExportExcelBO.FILE_NAME, BillExportExcelBO.SHEET_NAME, exportList);
     }
 
     /**
@@ -106,20 +101,11 @@ public class BillDomainServiceImpl implements BillDomainService {
     public Integer importExcel(MultipartFile excelFile) {
         Integer saveRow = 0;
 
-        try {
-            InputStream inputStream = excelFile.getInputStream();
-            List<BillImportExcelBO> importExcelBOList = EasyExcel.read(inputStream)
-                    .head(BillImportExcelBO.class)
-                    .sheet().doReadSync();
-
-            if (CollectionUtil.isNotEmpty(importExcelBOList)) {
-                var saveList = BillModelConverter.INSTANCE.importExcelToModelList(importExcelBOList);
-                saveRow = saveList.size();
-                billRepository.create(saveList);
-            }
-        } catch (IOException e) {
-            log.error("导入文件异常，{}", e);
-            throw new CustomException(ResponseEnum.FAIL);
+        var importExcelBOList = EasyExcelUtil.easyExcelRead(excelFile, BillImportExcelBO.class);
+        if (CollectionUtils.isNotEmpty(importExcelBOList)) {
+            var saveList = BillModelConverter.INSTANCE.importExcelToModelList(importExcelBOList);
+            saveRow = saveList.size();
+            billRepository.create(saveList);
         }
 
         return saveRow;

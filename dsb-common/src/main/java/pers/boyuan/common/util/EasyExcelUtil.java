@@ -3,9 +3,16 @@ package pers.boyuan.common.util;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
+import pers.boyuan.common.constants.ResponseEnum;
+import pers.boyuan.common.exception.CustomException;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLEncoder;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +45,24 @@ public class EasyExcelUtil {
             Map<String, String> map = new HashMap<>(2);
             map.put("status", "failure");
             map.put("message", "下载文件失败" + e.getMessage());
+        }
+    }
+
+    public static <T> List<T> easyExcelRead(MultipartFile excelFile, Class<T> tClass) {
+        try {
+            InputStream inputStream = excelFile.getInputStream();
+            List<T> result = EasyExcel.read(inputStream)
+                    .head(tClass)
+                    .sheet().doReadSync();
+
+            if (CollectionUtils.isEmpty(result)) {
+                return Collections.emptyList();
+            }
+
+            return result;
+        } catch (IOException e) {
+            log.error("导入文件异常，{}", e);
+            throw new CustomException(ResponseEnum.FAIL);
         }
     }
 

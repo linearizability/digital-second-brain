@@ -1,7 +1,8 @@
 package pers.boyuan.application.dictionary.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
 import lombok.var;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.boyuan.api.in.dictionary.CreateDictionaryAO;
@@ -38,7 +39,7 @@ public class DictionaryAppServiceImpl implements DictionaryAppService {
      */
     @Override
     public Boolean create(List<CreateDictionaryAO> aoList) {
-        if (CollectionUtil.isEmpty(aoList)) {
+        if (CollectionUtils.isEmpty(aoList)) {
             return Boolean.FALSE;
         }
 
@@ -84,7 +85,7 @@ public class DictionaryAppServiceImpl implements DictionaryAppService {
         var param = DictionaryDomainConverter.INSTANCE.queryDictionaryToModel(ao);
         var queryResult = dictionaryDomainService.query(param);
 
-        if (CollectionUtil.isEmpty(queryResult)) {
+        if (MapUtils.isEmpty(queryResult)) {
             return Collections.emptyMap();
         }
 

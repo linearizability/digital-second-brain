@@ -1,14 +1,15 @@
 package pers.boyuan.infrastructure.repository.dictionary;
 
-import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.var;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 import pers.boyuan.domain.dictionary.model.DictionaryModel;
 import pers.boyuan.domain.dictionary.repository.DictionaryRepository;
 import pers.boyuan.infrastructure.converter.dictionary.DictionaryEntityConverter;
@@ -16,6 +17,7 @@ import pers.boyuan.infrastructure.db.entity.Dictionary;
 import pers.boyuan.infrastructure.db.mapper.DictionaryMapper;
 import pers.boyuan.infrastructure.db.service.IDictionaryService;
 
+import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -26,6 +28,7 @@ import java.util.Objects;
  * @author ZhangBoyuan
  * @date 2022-06-11
  */
+@Validated
 @Component
 public class DictionaryMybatisRepository implements DictionaryRepository {
     @Autowired
@@ -43,7 +46,7 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
     @Override
     @CacheEvict(cacheNames = "dsb:cache:dictionary", allEntries = true)
     public Boolean create(List<DictionaryModel> modelList) {
-        var saveList = DictionaryEntityConverter.INSTANCE.modelToEntityList(modelList);
+        var saveList = DictionaryEntityConverter.INSTANCE.modelToEntity(modelList);
 
         return dictionaryService.saveBatch(saveList);
     }
@@ -56,8 +59,8 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
      */
     @Override
     @CacheEvict(cacheNames = "dsb:cache:dictionary", allEntries = true)
-    public Boolean delete(DictionaryModel param) {
-        var queryWrapper = getQueryDictionaryWrapper(param);
+    public Boolean delete(@NotNull(message = "删除字典入参不可为空") DictionaryModel param) {
+        var queryWrapper = buildBasicQueryWrapper(param);
 
         return dictionaryService.remove(queryWrapper);
     }
@@ -86,19 +89,21 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
     /**
      * 根据type查询字典数据
      *
-     * @param model
+     * @param model 入参
      * @return 数据库查询结果模型
      */
     @Override
     @Cacheable(cacheNames = "dsb:cache:dictionary")
     public List<DictionaryModel> query(DictionaryModel model) {
-        var queryWrapper = getQueryDictionaryWrapper(model);
+        if (Objects.isNull(model)) {
+            return getAll();
+        }
+        var queryWrapper = buildBasicQueryWrapper(model);
 
         var queryResult = dictionaryService.list(queryWrapper);
 
-        if (CollectionUtil.isNotEmpty(queryResult)) {
-            var result = DictionaryEntityConverter.INSTANCE.entityToModelList(queryResult);
-            return result;
+        if (CollectionUtils.isNotEmpty(queryResult)) {
+            return DictionaryEntityConverter.INSTANCE.entityToModel(queryResult);
         }
 
         return Collections.emptyList();
@@ -111,7 +116,7 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
      */
     @Override
     public List<DictionaryModel> getAll() {
-        return DictionaryEntityConverter.INSTANCE.entityToModelList(dictionaryService.list());
+        return DictionaryEntityConverter.INSTANCE.entityToModel(dictionaryService.list());
     }
 
     /**
@@ -120,14 +125,12 @@ public class DictionaryMybatisRepository implements DictionaryRepository {
      * @param param 查询条件
      * @return 生成wrapper
      */
-    private LambdaQueryWrapper<Dictionary> getQueryDictionaryWrapper(DictionaryModel param) {
-        var queryWrapper = Wrappers.<Dictionary>lambdaQuery()
+    private LambdaQueryWrapper<Dictionary> buildBasicQueryWrapper(DictionaryModel param) {
+        return Wrappers.<Dictionary>lambdaQuery()
                 .eq(Objects.nonNull(param.getId()), Dictionary::getId, param.getId())
                 .eq(StringUtils.isNotBlank(param.getType()), Dictionary::getType, param.getType())
                 .eq(StringUtils.isNotBlank(param.getCode()), Dictionary::getCode, param.getCode())
                 .eq(StringUtils.isNotBlank(param.getName()), Dictionary::getName, param.getName());
-
-        return queryWrapper;
     }
 
 }

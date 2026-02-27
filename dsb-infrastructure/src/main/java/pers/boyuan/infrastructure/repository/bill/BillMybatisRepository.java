@@ -1,13 +1,12 @@
 package pers.boyuan.infrastructure.repository.bill;
 
-import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.var;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pers.boyuan.domain.bill.model.BillModel;
@@ -17,12 +16,16 @@ import pers.boyuan.infrastructure.db.entity.Bill;
 import pers.boyuan.infrastructure.db.mapper.BillMapper;
 import pers.boyuan.infrastructure.db.service.IBillService;
 
-import java.util.Collections;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 
 /**
- * 字典表底层数据库接口 Mybatis 实现类
+ * 账单表底层数据库接口 Mybatis 实现类
  *
  * @author ZhangBoyuan
  * @date 2022-06-22
@@ -44,7 +47,7 @@ public class BillMybatisRepository implements BillRepository {
      */
     @Override
     public Boolean create(List<BillModel> modelList) {
-        var billList = BillEntityConverter.INSTANCE.modelToEntityList(modelList);
+        var billList = BillEntityConverter.INSTANCE.modelToEntity(modelList);
         return billService.saveBatch(billList);
     }
 
@@ -69,7 +72,7 @@ public class BillMybatisRepository implements BillRepository {
     public Boolean update(BillModel model) {
         Bill bill = BillEntityConverter.INSTANCE.modelToEntity(model);
 
-        return billMapper.updateById(bill) > 0 ? Boolean.TRUE : Boolean.FALSE;
+        return billMapper.updateById(bill) > 0 ? TRUE : FALSE;
     }
 
     /**
@@ -80,41 +83,27 @@ public class BillMybatisRepository implements BillRepository {
      */
     @Override
     public List<BillModel> query(BillModel model) {
-        var queryWrapper = getQueryBillWrapper(model);
+        var queryWrapper = buildBasicQueryWrapper(model);
 
         var queryResult = billService.list(queryWrapper);
 
-        if (CollectionUtil.isNotEmpty(queryResult)) {
-            return BillEntityConverter.INSTANCE.entityToModelList(queryResult);
-        }
-
-        return Collections.emptyList();
+        return outputParametersProcessor(queryResult);
     }
 
     /**
      * 查询账单表数据分页
      *
-     * @param model 查询账单表数据分页入参
-     * @param iPage 分页page
+     * @param param 查询账单表数据分页入参
      * @return 查询账单表分页数据
      */
     @Override
-    public IPage<BillModel> queryPage(BillModel model, IPage<BillModel> iPage) {
-        var queryWrapper = getQueryBillWrapper(model);
+    public IPage<BillModel> queryPage(BillModel param) {
+        IPage<Bill> pageParam = new Page<>(param.getPageIndex(), param.getPageSize());
 
-        IPage<Bill> billIPage = new Page<>(iPage.getCurrent(), iPage.getSize());
-        IPage<BillModel> result = new Page<>();
+        var queryWrapper = buildBasicQueryWrapper(param);
+        var queryResult = billMapper.selectPage(pageParam, queryWrapper);
 
-        var queryResult = billMapper.selectPage(billIPage, queryWrapper);
-
-        if (CollectionUtil.isEmpty(queryResult.getRecords())) {
-            return result;
-        }
-
-        BeanUtils.copyProperties(queryResult, result);
-        result.setRecords(BillEntityConverter.INSTANCE.entityToModelList(queryResult.getRecords()));
-
-        return result;
+        return queryResult.convert(BillEntityConverter.INSTANCE::entityToModel);
     }
 
     /**
@@ -123,23 +112,33 @@ public class BillMybatisRepository implements BillRepository {
      * @param model 查询条件
      * @return 生成wrapper
      */
-    private LambdaQueryWrapper<Bill> getQueryBillWrapper(BillModel model) {
+    private LambdaQueryWrapper<Bill> buildBasicQueryWrapper(BillModel model) {
         Bill bill = BillEntityConverter.INSTANCE.modelToEntity(model);
 
-        var queryWrapper = Wrappers.<Bill>lambdaQuery()
+        return Wrappers.<Bill>lambdaQuery()
                 .eq(Objects.nonNull(bill.getId()), Bill::getId, bill.getId())
                 .eq(Objects.nonNull(bill.getType()), Bill::getType, bill.getType())
                 .eq(Objects.nonNull(bill.getCategoryCode()), Bill::getCategoryCode, bill.getCategoryCode())
                 .like(StringUtils.isNotBlank(bill.getContent()), Bill::getContent, bill.getContent())
                 .like(StringUtils.isNotBlank(bill.getRemark()), Bill::getRemark, bill.getRemark())
                 .eq(Objects.nonNull(bill.getAmount()), Bill::getAmount, bill.getAmount())
-                .between(
-                        StringUtils.isNotBlank(model.getBeginPaymentTime())
+                .between(StringUtils.isNotBlank(model.getBeginPaymentTime())
                                 && StringUtils.isNotBlank(model.getEndPaymentTime()),
                         Bill::getPaymentTime,
                         model.getBeginPaymentTime(), model.getEndPaymentTime());
+    }
 
-        return queryWrapper;
+    /**
+     * 函数出参处理器
+     *
+     * @param entityList 实例集合
+     * @return 领域模型类
+     */
+    private List<BillModel> outputParametersProcessor(Collection<Bill> entityList) {
+        return CollectionUtils.emptyIfNull(entityList)
+                .stream()
+                .map(BillEntityConverter.INSTANCE::entityToModel)
+                .collect(Collectors.toList());
     }
 
 }
