@@ -1,12 +1,17 @@
 package pers.boyuan.application.tools.impl;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+import pers.boyuan.application.tools.ToolsAppService;
+
 /**
- * 常用工具汇总应用服务
+ * 常用工具汇总应用服务实现类
  *
  * @author ZhangBoyuan
- * @date 2023-02-16
+ * @since 2023-02-16
  */
-public interface ToolsAppServiceImpl {
+@Service
+public class ToolsAppServiceImpl implements ToolsAppService {
 
     /**
      * 静态变量名生成
@@ -14,6 +19,12 @@ public interface ToolsAppServiceImpl {
      * @param str 待处理数据
      * @return 处理后数据
      */
-    String staticVariableNameVariable(String str);
+    @Override
+    public String staticVariableNameVariable(String str) {
+        if (StringUtils.isBlank(str)) {
+            return "";
+        }
+        return str.replace(" ", "_").toUpperCase();
+    }
 
 }

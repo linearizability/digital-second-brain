@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pers.boyuan.application.tools.ToolsAppService;
+import pers.boyuan.application.tools.impl.ToolsAppServiceImpl;
 import pers.boyuan.common.dto.Response;
 
 /**
@@ -25,7 +25,7 @@ import pers.boyuan.common.dto.Response;
 public class ToolsController {
 
     @Autowired
-    private ToolsAppService toolsAppService;
+    private ToolsAppServiceImpl toolsAppService;
 
     @GetMapping("/staticVariableNameVariable")
     @Operation(summary = "静态变量名生成")
