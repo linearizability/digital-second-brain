@@ -1,8 +1,8 @@
-package pers.boyuan.application.tools;
+package pers.boyuan.application.tools.impl;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import pers.boyuan.application.tools.impl.ToolsAppService;
+import pers.boyuan.application.tools.ToolsAppService;
 
 /**
  * 常用工具汇总应用服务实现类

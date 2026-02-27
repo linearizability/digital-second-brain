@@ -1,4 +1,4 @@
-package pers.boyuan.application.tools.impl;
+package pers.boyuan.application.tools;
 
 /**
  * 常用工具汇总应用服务
