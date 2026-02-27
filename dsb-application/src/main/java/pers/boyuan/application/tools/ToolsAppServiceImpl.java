@@ -2,7 +2,7 @@ package pers.boyuan.application.tools;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import pers.boyuan.application.tools.impl.ToolsAppServiceImpl;
+import pers.boyuan.application.tools.impl.ToolsAppService;
 
 /**
  * 常用工具汇总应用服务实现类
@@ -11,7 +11,7 @@ import pers.boyuan.application.tools.impl.ToolsAppServiceImpl;
  * @date 2023-02-16
  */
 @Service
-public class ToolsAppService implements ToolsAppServiceImpl {
+public class ToolsAppServiceImpl implements ToolsAppService {
 
     /**
      * 静态变量名生成

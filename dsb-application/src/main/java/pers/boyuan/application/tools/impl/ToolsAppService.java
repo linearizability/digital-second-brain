@@ -6,7 +6,7 @@ package pers.boyuan.application.tools.impl;
  * @author ZhangBoyuan
  * @date 2023-02-16
  */
-public interface ToolsAppServiceImpl {
+public interface ToolsAppService {
 
     /**
      * 静态变量名生成
